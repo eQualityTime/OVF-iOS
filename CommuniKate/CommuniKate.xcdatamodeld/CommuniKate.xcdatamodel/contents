@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="17A344b" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Cell" representedClassName="Cell" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasImage" optional="YES" attributeType="Boolean" defaultValueString="NO" allowsExternalBinaryDataStorage="YES" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isLink" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="Decimal" minValueString="0" maxValueString="4" defaultValueString="0" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="cells" inverseEntity="Grid" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="cell" inverseEntity="Image" syncable="YES"/>
+        <relationship name="link" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="cell" inverseEntity="Link" syncable="YES"/>
+    </entity>
+    <entity name="Grid" representedClassName="Grid" syncable="YES">
+        <attribute name="gridID" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cells" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Cell" inverseName="grid" inverseEntity="Cell" syncable="YES"/>
+        <relationship name="link" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="grid" inverseEntity="Link" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uri" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cell" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cell" inverseName="image" inverseEntity="Cell" syncable="YES"/>
+    </entity>
+    <entity name="Link" representedClassName="Link" syncable="YES">
+        <attribute name="linkRef" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cell" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cell" inverseName="link" inverseEntity="Cell" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="link" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <entity name="Settings" representedClassName="Settings" syncable="YES">
+        <attribute name="adminemail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="gridSize" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <fetchRequest name="AllGridsFetchRequest" entity="Grid"/>
+    <fetchRequest name="GridFetchRequest" entity="Grid" predicateString="name == $NAME"/>
+    <fetchRequest name="ImagesMissing" entity="Image" predicateString="hasImage == 1 AND data == nil"/>
+    <fetchRequest name="SettingsFetchRequest" entity="Settings"/>
+    <elements>
+        <element name="Cell" positionX="-243" positionY="162" width="128" height="178"/>
+        <element name="Grid" positionX="-288" positionY="-49" width="128" height="105"/>
+        <element name="Image" positionX="-461" positionY="284" width="128" height="103"/>
+        <element name="Link" positionX="-63" positionY="18" width="128" height="88"/>
+        <element name="Settings" positionX="-470" positionY="90" width="128" height="133"/>
+    </elements>
+</model>
