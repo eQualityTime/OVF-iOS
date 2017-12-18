@@ -49,8 +49,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 
 @synthesize persistentContainer = _persistentContainer;
 
-+ (id)sharedInstance
-{
++ (id)sharedInstance {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
     dispatch_once(&pred, ^{
@@ -60,7 +59,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     return _sharedObject;
 }
 
--(AVSpeechSynthesizer *) synthesizer{
+- (AVSpeechSynthesizer *)synthesizer {
     if(!_synthesizer){
         _synthesizer= [[AVSpeechSynthesizer alloc] init];
     }
@@ -87,6 +86,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 }
 
 #pragma mark - Core Data Saving support
+
 - (void)saveContext {
     
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -100,11 +100,11 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     }
 }
 
--(void)buildDataFromURL:(NSURL *_Nonnull) url completion:(void (^_Nonnull)(BOOL success)) completionHandler error: (void (^_Nonnull)(NSError * _Nonnull error)) errorHandler{
-    if([self clearData]) {
+- (void)buildDataFromURL:(NSURL *_Nonnull)url completion:(void (^_Nonnull)(BOOL success))completionHandler error: (void (^_Nonnull)(NSError * _Nonnull error))errorHandler {
+    if ([self clearData]) {
         [GridManager downloadURL:url complition:^(BOOL success) {
-            if(success){
-                [Grid createGrids: [self managedObjectContext]];
+            if (success) {
+                [Grid createGrids:[self managedObjectContext]];
             }
             completionHandler(success);
         } error:^(NSError * _Nullable error) {
@@ -114,14 +114,13 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 }
 
 // Remove download json data from local storage and destroy core data graph
--(BOOL)clearData{
+- (BOOL)clearData {
     BOOL dataCleared = false;
     NSURL *downloadFolder =[GridManager jsonDirectory];
-    if([GridManager removeFolder: downloadFolder]){
-        if([self removeStore]){
+    if ([GridManager removeFolder: downloadFolder]) {
+        if ([self removeStore]) {
             NSURL *urlFolderToRemove = [GridManager jsonDirectory];
-            if([GridManager removeFolder:urlFolderToRemove])
-            {
+            if ([GridManager removeFolder:urlFolderToRemove]) {
                 [GridManager clearDomain];
                 dataCleared = true;
             }
@@ -130,11 +129,10 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     return dataCleared;
 }
 
--(BOOL)removeStore{
+- (BOOL)removeStore {
     BOOL storeRemoved = false;
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [self.persistentContainer persistentStoreCoordinator];
     NSURL *storeURL = [[[persistentStoreCoordinator  persistentStores] firstObject] URL];
-    // NSLog(@"Removed Store at URL: %@", storeURL);
     
     NSError *error;
     [persistentStoreCoordinator destroyPersistentStoreAtURL:storeURL withType: NSSQLiteStoreType options:nil error:&error];
@@ -156,7 +154,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 #pragma mark - Color helper
 // Convert color values from array into a core image color format
 // Parameter array can be and an array or emply string
-+(NSString *)arrayToColorString:(NSArray *) array{
++ (NSString *)arrayToColorString:(NSArray *)array {
     NSString *colorString = @"1.0 1.0 1.0 1.0"; // White default
     if([array isKindOfClass:[NSArray class]] && array.count == 3){
         
@@ -171,7 +169,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 }
 
 // Usage - UIColor *c = [GridManager colorFromString: string ];
-+(UIColor *)colorFromString:(NSString *)colorString {
++ (UIColor *)colorFromString:(NSString *)colorString {
     UIColor *colorFromString;
     
     CIColor *colorCi = [CIColor colorWithString: colorString];
@@ -181,10 +179,11 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 }
 
 #pragma mark - Images
-+(void) getImageForCell:(Cell *) cell inView:(CellView *) view rect:(CGRect) rect{
+
++ (void)getImageForCell:(Cell *)cell inView:(CellView *)view rect:(CGRect)rect {
     
-    if(cell.image){
-        if(!cell.image.data){
+    if (cell.image) {
+        if (!cell.image.data) {
             __weak Cell *weakCell = cell;
             __weak CellView *weakView = view;
             __block CGRect blockRect = rect;
@@ -195,7 +194,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
                 NSURL *imageURL = [[GridManager  getDomain] URLByAppendingPathComponent:cell.image.uri];
                 
                 [GridManager get: imageURL completion:^(NSData * _Nullable data) {
-                    if(data){
+                    if (data) {
                         strongCell.image.data = data;
                         NSError *error;
                         [strongCell.managedObjectContext save: &error];
@@ -208,13 +207,13 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
                     [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationRaisedAnException object:self userInfo: @{@"NSERROR" : error}];
                 }];
             });
-        }else{
+        } else {
             [GridManager setCellView:view withImage: cell.image.data inRect: rect];
         }
     }
 }
 
-+(void)setCellView:(CellView *) view withImage:(NSData *) data inRect:(CGRect) rect{
++ (void)setCellView:(CellView *)view withImage:(NSData *)data inRect:(CGRect)rect {
     if(view && data){
         dispatch_async(dispatch_get_main_queue(), ^{
             UIImage *image = [Image getImage: data];
@@ -233,8 +232,8 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 
 #pragma mark - Domian
 // Need to store
-+(void)setDomain:(NSURL *_Nonnull) url{
-    if(url){
++ (void)setDomain:(NSURL *_Nonnull)url {
+    if (url) {
         NSUserDefaults *properties = [NSUserDefaults standardUserDefaults];
         //set list
         [properties setObject: [url absoluteString]  forKey:@"remote-json-url"];
@@ -243,7 +242,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     }
 }
 
-+(void)clearDomain{
++ (void)clearDomain {
     NSUserDefaults *properties = [NSUserDefaults standardUserDefaults];
     //set list
     [properties setObject: @"" forKey:@"remote-json-url"];
@@ -251,15 +250,14 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     [properties synchronize]; //update & save
 }
 
-+(NSURL *_Nullable)getJSONURL{
-    //NSURL *url = [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey: @"remote-json-url"]];
-    NSURL *url = [NSURL URLWithString: @"http://equalitytime.github.io/CommuniKate/demos/CK20V2.pptx/pageset.json"];
-    
++ (NSURL *_Nullable)getJSONURL {
+    NSURL *url = [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey: @"remote-json-url"]];
+
     return url;
 }
 
-+(NSURL *_Nullable)getDomain{
-    return [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey:@"application-domain"]];
++ (NSURL *_Nullable)getDomain {
+    return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"application-domain"]];
 }
 
 @end
