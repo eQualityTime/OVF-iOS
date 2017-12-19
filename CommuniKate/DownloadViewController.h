@@ -10,7 +10,7 @@
 @class DownloadViewController;
 
 @protocol DownloadViewControllerDelegate
--(void) downloadViewController:(DownloadViewController *) controller downloadFromURL:(NSURL *)url;
+- (void)downloadViewController:(DownloadViewController *)controller downloadFromURL:(NSURL *)url;
 @end
 
 @interface DownloadViewController : UIViewController

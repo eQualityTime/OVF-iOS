@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina5_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,19 +19,15 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CommuniKate v 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qww-RE-x2Q">
-                                <rect key="frame" x="20" y="619" width="374" height="24"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch-image" translatesAutoresizingMaskIntoConstraints="NO" id="Lyy-Sb-Yxr">
-                                <rect key="frame" x="0.0" y="180" width="414" height="291"/>
+                                <rect key="frame" x="240" y="79.666666666666686" width="256" height="256"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="SfH-p6-tzh"/>
                                     <constraint firstAttribute="height" constant="291" id="gDM-Np-glW"/>
+                                    <constraint firstAttribute="height" constant="256" id="sxe-ij-Raa"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -44,14 +40,24 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CommuniKate v 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qww-RE-x2Q">
+                                <rect key="frame" x="283.33333333333331" y="370" width="169.33333333333331" height="24"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Lyy-Sb-Yxr" firstAttribute="centerX" secondItem="Qww-RE-x2Q" secondAttribute="centerX" id="2Mc-FT-102"/>
                             <constraint firstItem="Lyy-Sb-Yxr" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="7G8-xj-1Vr"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Qww-RE-x2Q" secondAttribute="bottom" constant="20" id="9u5-Nz-AO0"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Qww-RE-x2Q" secondAttribute="bottom" constant="93" id="Fde-uw-ATw"/>
                             <constraint firstItem="Lyy-Sb-Yxr" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="160" id="GA6-pR-f0c"/>
                             <constraint firstItem="Qww-RE-x2Q" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="PSh-mg-Sn4"/>
+                            <constraint firstItem="Lyy-Sb-Yxr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UgA-s3-lok"/>
+                            <constraint firstItem="Qww-RE-x2Q" firstAttribute="centerX" secondItem="Lyy-Sb-Yxr" secondAttribute="centerX" id="mQt-P0-W9E"/>
+                            <constraint firstItem="Lyy-Sb-Yxr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="orb-9f-zIA"/>
                             <constraint firstAttribute="trailing" secondItem="Lyy-Sb-Yxr" secondAttribute="trailing" id="qke-UF-uKc"/>
                         </constraints>
                         <variation key="default">

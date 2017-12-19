@@ -3,7 +3,6 @@
 //  CommuniKate
 //
 //  Created by Kalpesh Modha on 17/08/2017.
- 
 
 #import "DownloadViewController.h"
 #import "GridManager+Settings.h"
@@ -18,9 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     NSURL *url = [GridManager getJSONURL];
-     if(url){
+     if (url) {
         self.url.text = [NSString stringWithFormat:@"%@", url];
     }
 }
@@ -32,11 +31,11 @@
 - (IBAction)download:(id)sender {
     
     NSArray *tokens = [self.url.text componentsSeparatedByString:@"://"];
-    if([[tokens firstObject] isEqualToString:@"http"]){
+    if ([[tokens firstObject] isEqualToString:@"https"]) {
         NSURL *url = [NSURL URLWithString:self.url.text];
-        [self.delegate downloadViewController: self downloadFromURL:url];
+        [self.delegate downloadViewController:self downloadFromURL:url];
         [self dismissViewControllerAnimated:YES completion:nil];
-    }else{
+    } else {
         self.message.text = NSLocalizedString(@"Resourse must be from a secure site, for example https://...", nil);
     }
 }
