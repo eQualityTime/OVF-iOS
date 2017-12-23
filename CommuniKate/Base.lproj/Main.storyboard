@@ -10,127 +10,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-        <array key="HelveticaNeueLights.ttc">
-            <string>HelveticaNeue-Light</string>
-        </array>
-    </customFonts>
     <scenes>
-        <!--Download View Controller-->
-        <scene sceneID="szM-34-gjb">
-            <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="formSheet" id="4Mr-KT-sMH" customClass="DownloadViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yS8-jx-yUv"/>
-                        <viewControllerLayoutGuide type="bottom" id="ffA-2b-GV0"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="RvA-ni-kb3">
-                        <rect key="frame" x="0.0" y="0.0" width="632" height="200"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7U7-YL-021">
-                                <rect key="frame" x="152" y="144" width="328" height="36"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yF5-Er-fxj">
-                                        <rect key="frame" x="0.0" y="0.0" width="160" height="36"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="160" id="eWG-5R-hKL"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="0.27208268390000001" green="0.67122395830000003" blue="0.22459870100000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.27208268390000001" green="0.67122395830000003" blue="0.22459870100000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="cancel:" destination="4Mr-KT-sMH" eventType="touchUpInside" id="7pn-4I-H0q"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QlE-le-CpB">
-                                        <rect key="frame" x="168" y="0.0" width="160" height="36"/>
-                                        <color key="backgroundColor" red="0.27208268390000001" green="0.67122395830000003" blue="0.22459870100000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="160" id="MLv-tA-Fax"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                        <state key="normal" title="Download">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.27208268390000001" green="0.67122395830000003" blue="0.22459870100000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="download:" destination="4Mr-KT-sMH" eventType="touchUpInside" id="okO-EU-jg2"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QvI-7A-iD0">
-                                <rect key="frame" x="20" y="20" width="592" height="96"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resource URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgB-CG-Qgr">
-                                        <rect key="frame" x="0.0" y="0.0" width="592" height="26"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hoG-lO-384">
-                                        <rect key="frame" x="0.0" y="36" width="592" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Af-9V-STs">
-                                        <rect key="frame" x="0.0" y="76" width="592" height="20"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.20354642949999999" blue="0.1662308301" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="7U7-YL-021" firstAttribute="top" secondItem="QvI-7A-iD0" secondAttribute="bottom" constant="28" id="Bvz-h1-19J"/>
-                            <constraint firstAttribute="bottom" secondItem="7U7-YL-021" secondAttribute="bottom" constant="20" symbolic="YES" id="ew5-vH-y7Z"/>
-                            <constraint firstItem="7U7-YL-021" firstAttribute="centerX" secondItem="QvI-7A-iD0" secondAttribute="centerX" id="foQ-ed-EyF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="QvI-7A-iD0" secondAttribute="trailing" id="g6D-2T-JDw"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="QvI-7A-iD0" secondAttribute="leading" id="lHF-hS-3Zx"/>
-                        </constraints>
-                    </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="632" height="200"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="632" height="200"/>
-                    <connections>
-                        <outlet property="message" destination="0Af-9V-STs" id="1Dv-3P-gCa"/>
-                        <outlet property="url" destination="hoG-lO-384" id="i9R-xM-xkD"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3pb-L0-UKt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="153" y="-132"/>
-        </scene>
         <!--CommuniKate-->
         <scene sceneID="LPk-LF-t19">
             <objects>
@@ -232,11 +112,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqq-mY-N3b" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="bOU-Xv-tbO">
-                    <connections>
-                        <segue destination="4Mr-KT-sMH" kind="presentation" identifier="Download Segue" id="jQm-oh-Vgy"/>
-                    </connections>
-                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="bOU-Xv-tbO"/>
             </objects>
             <point key="canvasLocation" x="-593.5546875" y="75.78125"/>
         </scene>

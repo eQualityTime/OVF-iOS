@@ -16,11 +16,10 @@
 #import "CellView.h"
 #import "UIView+Animation.h"
 #import "WebViewController.h"
-#import "DownloadViewController.h"
 #import "AppDelegate.h"
 #import "Constants.h"
 
-@interface GridViewController () <DownloadViewControllerDelegate>
+@interface GridViewController ()
 @property (strong, nonatomic) GridManager *gridManager;
 @property (strong, nonatomic) Grid *visiableGrid;
 @property (strong, nonatomic) UITextView *dialogue;
@@ -62,7 +61,7 @@
     
     [self prepareUI];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gridsNeedsSetup:) name: kGridsNeedDownloadingNotification object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gridsNeedsSetup:) name:kGridsNeedDownloadingNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,7 +85,8 @@
     if (urlContainsJSONExtension) {
         [self loadDefaultGrid:nil];
     } else {
-        [self performSegueWithIdentifier:@"Download Segue" sender:self];
+        NSURL *defaultRemoteUrl = [NSURL URLWithString:kRemoteURLString];
+        [self downloadGridFromUrl:defaultRemoteUrl];
     }
 }
 
@@ -111,7 +111,6 @@
 - (void)prepareUI {
     // Instantiate dialogue text view that will be shared when the grid changes
     self.gridView.dialogue = self.gridView.dialogue ? self.gridView.dialogue : self.dialogue;
-        
 }
 
 - (void)hideButtonsIfNeeded {
@@ -153,33 +152,28 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString:@"Download Segue"]) {
-        DownloadViewController *controller = (DownloadViewController *)segue.destinationViewController;
-        [controller setDelegate: self];
+    NSString *navigationControllerTitle;
+    NSString *resource;
+    
+    if ([segue.identifier isEqualToString: @"YouTubeSegue"]) {
+        navigationControllerTitle = @"You Tube";
+        resource = [NSString stringWithFormat:kYouTube, self.dialogue.text];
+    } else if ([segue.identifier isEqualToString: @"TwitterSegue"]) {
+        navigationControllerTitle = @"Twitter";
+        resource = [NSString stringWithFormat:kTwitter, self.dialogue.text];
     } else {
-        NSString *navigationControllerTitle;
-        NSString *resource;
-        
-        if ([segue.identifier isEqualToString: @"YouTubeSegue"]) {
-            navigationControllerTitle = @"You Tube";
-            resource = [NSString stringWithFormat:kYouTube, self.dialogue.text];
-        } else if ([segue.identifier isEqualToString: @"TwitterSegue"]) {
-            navigationControllerTitle = @"Twitter";
-            resource = [NSString stringWithFormat:kTwitter, self.dialogue.text];
-        } else {
-            navigationControllerTitle = @"Google";
-            resource = [NSString stringWithFormat:kGoogle, self.dialogue.text];
-        }
-        
-        NSString *encodedUrl = [resource stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        NSURLRequest *requestURL = [NSURLRequest requestWithURL: [NSURL URLWithString: encodedUrl]];
-        
-        UINavigationController *navController = [segue destinationViewController];
-        
-        WebViewController *controller = [[navController viewControllers] firstObject];
-        controller.request = requestURL;
-        controller.title =  NSLocalizedString(navigationControllerTitle, nil);
+        navigationControllerTitle = @"Google";
+        resource = [NSString stringWithFormat:kGoogle, self.dialogue.text];
     }
+    
+    NSString *encodedUrl = [resource stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL: [NSURL URLWithString: encodedUrl]];
+    
+    UINavigationController *navController = [segue destinationViewController];
+    
+    WebViewController *controller = [[navController viewControllers] firstObject];
+    controller.request = requestURL;
+    controller.title =  NSLocalizedString(navigationControllerTitle, nil);
 }
 
 - (void)navigateToWebControllerWithTitle:(NSString *)title urlString:(NSString *)urlString {
@@ -265,6 +259,10 @@
 
 - (void)gridsNeedsSetup:(NSNotification *)notification {
     NSURL *downloadURL = notification.userInfo[@"url"];
+    [self downloadGridFromUrl:downloadURL];
+}
+
+- (void)downloadGridFromUrl:(NSURL *)downloadURL {
     if ([GridManager isHostAvailable:downloadURL]) {
         self.pendingRequest = YES;
         __weak typeof(self) weakSelf = self;
@@ -431,11 +429,4 @@
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [delegate showAlert:title message:message buttonText:buttonTitle];
 }
-
-#pragma mark - DownloadViewControllerDelegate
-
-- (void)downloadViewController:(DownloadViewController *)controller downloadFromURL:(NSURL *)url {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kGridsNeedDownloadingNotification object:self userInfo:@{@"url": url}];
-}
 @end
-

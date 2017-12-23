@@ -61,35 +61,30 @@
                                     <outlet property="titleLabel" destination="g62-OL-yFj" id="ePQ-f5-qBe"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DownloadCell" rowHeight="150" id="8U6-P1-jYF">
-                                <rect key="frame" x="0.0" y="141.5" width="375" height="150"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DownloadCell" rowHeight="120" id="8U6-P1-jYF" userLabel="DownloadViewCell" customClass="DownloadCell">
+                                <rect key="frame" x="0.0" y="141.5" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8U6-P1-jYF" id="Acv-Ei-MLd">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jB2-Ep-Jkd">
-                                            <rect key="frame" x="24" y="18.5" width="327" height="60"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="jB2-Ep-Jkd">
+                                            <rect key="frame" x="24" y="15" width="327" height="96.5"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c6a-1t-bpR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="33.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiH-LZ-NUM">
-                                                    <rect key="frame" x="0.0" y="40" width="327" height="20"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <rect key="frame" x="0.0" y="35.5" width="327" height="18.5"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="1" green="0.20354642949999999" blue="0.1662308301" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                            </subviews>
-                                        </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xum-sf-FzY">
-                                            <rect key="frame" x="24" y="86.5" width="327" height="36"/>
-                                            <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSM-XF-zfB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="36"/>
+                                                    <rect key="frame" x="0.0" y="56" width="327" height="40.5"/>
                                                     <color key="backgroundColor" red="0.27208268390000001" green="0.67122395830000003" blue="0.22459870100000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                                                     <state key="normal" title="Download">
@@ -106,20 +101,24 @@
                                                             <real key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="download:" destination="8U6-P1-jYF" eventType="touchUpInside" id="Ma2-VK-YCh"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="xum-sf-FzY" firstAttribute="top" secondItem="jB2-Ep-Jkd" secondAttribute="bottom" constant="8" id="3Mr-z6-PRE"/>
                                         <constraint firstItem="jB2-Ep-Jkd" firstAttribute="leading" secondItem="Acv-Ei-MLd" secondAttribute="leadingMargin" constant="8" id="7Uz-ek-H0z"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="jB2-Ep-Jkd" secondAttribute="trailing" constant="8" id="Hvh-wk-u0m"/>
-                                        <constraint firstItem="xum-sf-FzY" firstAttribute="leading" secondItem="Acv-Ei-MLd" secondAttribute="leadingMargin" constant="8" id="UWK-D9-TeC"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="xum-sf-FzY" secondAttribute="trailing" constant="8" id="gLZ-oX-Pf7"/>
-                                        <constraint firstItem="jB2-Ep-Jkd" firstAttribute="top" secondItem="Acv-Ei-MLd" secondAttribute="topMargin" constant="8" id="kif-c2-8uK"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xum-sf-FzY" secondAttribute="bottom" constant="8" id="mAi-7v-8iZ"/>
+                                        <constraint firstItem="jB2-Ep-Jkd" firstAttribute="top" secondItem="Acv-Ei-MLd" secondAttribute="topMargin" constant="4" id="kif-c2-8uK"/>
+                                        <constraint firstAttribute="bottom" secondItem="jB2-Ep-Jkd" secondAttribute="bottom" constant="8" id="qcz-Ah-8Cx"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="messageLabel" destination="aiH-LZ-NUM" id="f9F-ot-7ll"/>
+                                    <outlet property="urlTextField" destination="c6a-1t-bpR" id="yfy-Id-4Rq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -128,7 +127,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="21w-ST-6WA">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="stop" id="DUV-HM-Ylb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="DUV-HM-Ylb">
                             <connections>
                                 <action selector="closeButtonTapped:" destination="VsD-uD-Fi0" id="djX-h0-hyM"/>
                             </connections>

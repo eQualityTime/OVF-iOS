@@ -8,7 +8,9 @@
 
 #import "SettingsViewController.h"
 #import "SwitchCell.h"
+#import "DownloadCell.h"
 #import "Constants.h"
+#import "UITableViewCell+Category.h"
 
 @interface SettingsViewController ()
 @property (nonatomic) NSArray *sectionList;
@@ -71,8 +73,8 @@ typedef NS_ENUM(NSUInteger, SettingsRowType) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == kSettingsSection) {
-        SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:@"SwitchCell" forIndexPath:indexPath];
-        BOOL isSwitchOn = NO;
+        SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:[SwitchCell reuseIdentifier] forIndexPath:indexPath];
+        BOOL isSwitchOn = YES;
         NSString *switchKey = @"";
         
         switch (indexPath.row) {
@@ -97,8 +99,12 @@ typedef NS_ENUM(NSUInteger, SettingsRowType) {
         
         return cell;
     } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DownloadCell" forIndexPath:indexPath];
+        DownloadCell *cell = [tableView dequeueReusableCellWithIdentifier:[DownloadCell reuseIdentifier] forIndexPath:indexPath];
         
+        __weak typeof(self) weakSelf = self;
+        [cell setupCellWithDownloadRequestedBlock:^{
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        }];
         return cell;
     }
 }

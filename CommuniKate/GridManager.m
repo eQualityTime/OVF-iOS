@@ -10,6 +10,7 @@
 #import "GridManager+Network.h"
 #import "GridManager+Store.h"
 #import "GridManager+Settings.h"
+#import "Constants.h"
 
 // Application Error
 NSString *const kApplicationRaisedAnException =  @"kApplicationRaisedAnException";
@@ -236,7 +237,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     if (url) {
         NSUserDefaults *properties = [NSUserDefaults standardUserDefaults];
         //set list
-        [properties setObject: [url absoluteString]  forKey:@"remote-json-url"];
+        [properties setObject: [url absoluteString]  forKey:kRemoteJsonUrlKey];
         [properties setObject:  [[url URLByDeletingLastPathComponent] absoluteString] forKey:@"application-domain"];
         [properties synchronize]; //update & save
     }
@@ -245,14 +246,13 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 + (void)clearDomain {
     NSUserDefaults *properties = [NSUserDefaults standardUserDefaults];
     //set list
-    [properties setObject: @"" forKey:@"remote-json-url"];
-    [properties setObject:  @"" forKey:@"application-domain"];
+    [properties setObject:@"" forKey:kRemoteJsonUrlKey];
+    [properties setObject:@"" forKey:@"application-domain"];
     [properties synchronize]; //update & save
 }
 
 + (NSURL *_Nullable)getJSONURL {
-    NSURL *url = [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey: @"remote-json-url"]];
-
+    NSURL *url = [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey:kRemoteJsonUrlKey]];
     return url;
 }
 
@@ -261,9 +261,3 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 }
 
 @end
-
-
-
-
-
-
