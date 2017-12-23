@@ -43,6 +43,9 @@
 		4BCA6FE91F22AD1600CA601F /* GridManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FE81F22AD1600CA601F /* GridManagerTests.m */; };
 		4BCA6FEF1F23EE5C00CA601F /* Settings+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEC1F23EE5C00CA601F /* Settings+CoreDataClass.m */; };
 		4BCA6FF01F23EE5C00CA601F /* Settings+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */; };
+		A66B23161FEDB019003DF961 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66B23151FEDB019003DF961 /* Settings.storyboard */; };
+		A66B231A1FEDB053003DF961 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B23191FEDB053003DF961 /* SettingsViewController.m */; };
+		A66B231E1FEDBD39003DF961 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B231D1FEDBD39003DF961 /* SwitchCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +126,12 @@
 		4BCA6FEC1F23EE5C00CA601F /* Settings+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Settings+CoreDataClass.m"; sourceTree = "<group>"; };
 		4BCA6FED1F23EE5C00CA601F /* Settings+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Settings+CoreDataProperties.h"; sourceTree = "<group>"; };
 		4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Settings+CoreDataProperties.m"; sourceTree = "<group>"; };
+		A66B23151FEDB019003DF961 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		A66B23181FEDB053003DF961 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		A66B23191FEDB053003DF961 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		A66B231C1FEDBD39003DF961 /* SwitchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwitchCell.h; sourceTree = "<group>"; };
+		A66B231D1FEDBD39003DF961 /* SwitchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwitchCell.m; sourceTree = "<group>"; };
+		A66B23201FEE76E4003DF961 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +173,7 @@
 		4B44FB401F1791C000A61B39 /* CommuniKate */ = {
 			isa = PBXGroup;
 			children = (
+				A66B23121FEDAFFC003DF961 /* Module */,
 				4B44FB441F1791C200A61B39 /* AppDelegate.h */,
 				4B44FB451F1791C200A61B39 /* AppDelegate.m */,
 				4B44FB501F1791C300A61B39 /* Assets.xcassets */,
@@ -270,6 +280,59 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		A66B23121FEDAFFC003DF961 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				A66B231F1FEE76CA003DF961 /* Common */,
+				A66B23131FEDB005003DF961 /* Settings */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		A66B23131FEDB005003DF961 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A66B231B1FEDBD17003DF961 /* Cell */,
+				A66B23171FEDB020003DF961 /* ViewController */,
+				A66B23141FEDB00D003DF961 /* Storyboard */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A66B23141FEDB00D003DF961 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				A66B23151FEDB019003DF961 /* Settings.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		A66B23171FEDB020003DF961 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A66B23181FEDB053003DF961 /* SettingsViewController.h */,
+				A66B23191FEDB053003DF961 /* SettingsViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A66B231B1FEDBD17003DF961 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A66B231C1FEDBD39003DF961 /* SwitchCell.h */,
+				A66B231D1FEDBD39003DF961 /* SwitchCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A66B231F1FEE76CA003DF961 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A66B23201FEE76E4003DF961 /* Constants.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -357,6 +420,7 @@
 				4B44FB541F1791C300A61B39 /* LaunchScreen.storyboard in Resources */,
 				4B44FB511F1791C300A61B39 /* Assets.xcassets in Resources */,
 				4B44FB4C1F1791C300A61B39 /* Main.storyboard in Resources */,
+				A66B23161FEDB019003DF961 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +453,7 @@
 				4BB3E7201F194C0100C851AB /* GridManager+Network.m in Sources */,
 				4BCA6FEF1F23EE5C00CA601F /* Settings+CoreDataClass.m in Sources */,
 				4B44FB461F1791C200A61B39 /* AppDelegate.m in Sources */,
+				A66B231E1FEDBD39003DF961 /* SwitchCell.m in Sources */,
 				4BCA6FE71F22359C00CA601F /* WebViewController.m in Sources */,
 				4BB3E7E91F1ACCE700C851AB /* Link+CoreDataProperties.m in Sources */,
 				4BCA6FF01F23EE5C00CA601F /* Settings+CoreDataProperties.m in Sources */,
@@ -399,6 +464,7 @@
 				4BB3E7EB1F1ACCE700C851AB /* Image+CoreDataClass.m in Sources */,
 				4BB3E7EF1F1ACCE700C851AB /* Cell+CoreDataClass.m in Sources */,
 				4BA2B9291F20BAE700517D97 /* CellView.m in Sources */,
+				A66B231A1FEDB053003DF961 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

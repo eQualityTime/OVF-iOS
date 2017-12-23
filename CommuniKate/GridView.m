@@ -16,16 +16,16 @@
     // Clear all subviews
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    if(self.grid){
+    if (self.grid) {
         
         CGFloat cellWidth = rect.size.width / 5.0f;
         CGFloat cellHeight = rect.size.height / 5.0f;
         
-        if(cellHeight > cellWidth){
+        if (cellHeight > cellWidth) {
             cellHeight = cellWidth;
         }
         
-        for(Cell *cell in self.grid.cells){
+        for (Cell *cell in self.grid.cells) {
             
             CGRect cellRect = CGRectZero;
             cellRect.origin.x = [cell.x floatValue] * cellWidth;
@@ -39,7 +39,7 @@
             [self addSubview:view];
         }
         
-        if(self.dialogue){
+        if (self.dialogue) {
             self.dialogue.frame = CGRectMake(cellWidth, 0, cellWidth*3, cellHeight);
             [self addSubview: self.dialogue];
         }
@@ -51,13 +51,8 @@
     }
 }
 
--(void)speak:(id)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName: kSpeakTextNotification object:nil];
+- (void)speak:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSpeakTextNotification object:nil];
 }
 
 @end
-
-
-
-
-

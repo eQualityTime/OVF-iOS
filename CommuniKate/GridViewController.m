@@ -18,13 +18,17 @@
 #import "WebViewController.h"
 #import "DownloadViewController.h"
 #import "AppDelegate.h"
+#import "Constants.h"
 
 @interface GridViewController () <DownloadViewControllerDelegate>
 @property (strong, nonatomic) GridManager *gridManager;
 @property (strong, nonatomic) Grid *visiableGrid;
 @property (strong, nonatomic) UITextView *dialogue;
-@property (weak, nonatomic) IBOutlet GridView *gridView;
 @property (nonatomic) BOOL pendingRequest;
+@property (weak, nonatomic) IBOutlet GridView *gridView;
+@property (weak, nonatomic) IBOutlet UIButton *googleButton;
+@property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
+@property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @end
 
 @implementation GridViewController
@@ -55,15 +59,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Instantiate dialogue text view that will be shared when the grid changes
-    self.gridView.dialogue = self.gridView.dialogue ? self.gridView.dialogue : self.dialogue;
+    
+    [self prepareUI];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gridsNeedsSetup:) name: kGridsNeedDownloadingNotification object: nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self hideButtonsIfNeeded];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellTouched:) name:kDidTapViewNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(speak:) name:kSpeakTextNotification object:nil];
@@ -99,7 +104,49 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.gridView setNeedsDisplayInRect: self.view.bounds];
+}
+
+#pragma mark - UI
+
+- (void)prepareUI {
+    // Instantiate dialogue text view that will be shared when the grid changes
+    self.gridView.dialogue = self.gridView.dialogue ? self.gridView.dialogue : self.dialogue;
+        
+}
+
+- (void)hideButtonsIfNeeded {
+    BOOL isGoogleSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kGoogleDisplayKey];
+    self.googleButton.hidden = !isGoogleSwitchOn;
+    
+    BOOL isYoutubeSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kYoutubeDisplayKey];
+    self.youtubeButton.hidden = !isYoutubeSwitchOn;
+
+    BOOL isTwitterSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kTwitterDisplayKey];
+    self.twitterButton.hidden = !isTwitterSwitchOn;
+}
+
+#pragma mark - Actions
+
+- (IBAction)settingsTapped:(UIButton *)sender {
+    UIStoryboard *settingsStoryboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    UINavigationController *settingsNavController = [settingsStoryboard instantiateInitialViewController];
+    
+    [self presentViewController:settingsNavController animated:YES completion:nil];
+}
+
+- (IBAction)googleButtonTapped:(UIButton *)sender {
+    NSString *urlString = [NSString stringWithFormat:kGoogle, self.dialogue.text];
+    [self navigateToWebControllerWithTitle:@"Google" urlString:urlString];
+}
+
+- (IBAction)youtubeButtonTapped:(UIButton *)sender {
+    NSString *urlString = [NSString stringWithFormat:kYouTube, self.dialogue.text];
+    [self navigateToWebControllerWithTitle:@"YouTube" urlString:urlString];
+}
+
+- (IBAction)twitterButtonTapped:(UIButton *)sender {
+    NSString *urlString = [NSString stringWithFormat:kTwitter, self.dialogue.text];
+    [self navigateToWebControllerWithTitle:@"Twitter" urlString:urlString];
 }
 
 #pragma mark - Segue
@@ -124,7 +171,7 @@
             resource = [NSString stringWithFormat:kGoogle, self.dialogue.text];
         }
         
-        NSString* encodedUrl = [resource stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *encodedUrl = [resource stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURLRequest *requestURL = [NSURLRequest requestWithURL: [NSURL URLWithString: encodedUrl]];
         
         UINavigationController *navController = [segue destinationViewController];
@@ -133,6 +180,20 @@
         controller.request = requestURL;
         controller.title =  NSLocalizedString(navigationControllerTitle, nil);
     }
+}
+
+- (void)navigateToWebControllerWithTitle:(NSString *)title urlString:(NSString *)urlString {
+    NSString *encodedUrl = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL:[NSURL URLWithString:encodedUrl]];
+    
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *webNavController = [mainStoryboard instantiateViewControllerWithIdentifier:@"WebNavigationViewController"];
+
+    WebViewController *controller = [[webNavController viewControllers] firstObject];
+    controller.request = requestURL;
+    controller.title =  NSLocalizedString(title, nil);
+    
+    [self presentViewController:webNavController animated:YES completion:nil];
 }
 
 #pragma mark - speech
@@ -362,43 +423,14 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (IBAction)settings:(id)sender {
-    
-    NSString *title = NSLocalizedString(@"Download", nil);
-    NSString *message =  NSLocalizedString(@"Download application resourses from internet.", nil);
-    
-    NSString *cancelButtonTitle = NSLocalizedString(@"Cancel", nil);
-    NSString *downloadButtonTitle = NSLocalizedString(@"Download", nil);
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    //Create the actions.
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
-                                   {
-                                       // Do Nothing
-                                   }];
-    
-    UIAlertAction *downloadAction = [UIAlertAction actionWithTitle:downloadButtonTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action)
-                                     {
-                                         [[NSNotificationCenter defaultCenter] postNotificationName: kGridsNeedDownloadingNotification object:self userInfo: nil];
-                                     }];
-    //Add the actions.
-    [alertController addAction:cancelAction];
-    [alertController addAction:downloadAction];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
 - (void)internetConnectionRequired {
     NSString *title = NSLocalizedString(@"Internet Connection", nil);
     NSString *message = NSLocalizedString(@"An internet connection is required to download resources. Please connect your device to a Wi-Fi network and try again.", nil);
     NSString *buttonTitle = NSLocalizedString(@"Close", nil);
     
-    
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    [delegate showAlert:title message:message buttonText: buttonTitle];
+    [delegate showAlert:title message:message buttonText:buttonTitle];
 }
-
 
 #pragma mark - DownloadViewControllerDelegate
 

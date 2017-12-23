@@ -10,26 +10,18 @@
 
 @interface WebViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-
 @end
 
 @implementation WebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self.webView loadRequest:_request];
     [super viewDidAppear:animated];
+    [self.webView loadRequest:self.request];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 #pragma mark - Actions
 
