@@ -349,13 +349,7 @@
                 NSString *command = [NSString stringWithFormat: @"%@:", tokens[1]];
                 @try {
                     SEL aSelector = NSSelectorFromString(command);
-                    if ([self canPerformAction:aSelector withSender:tokens]) {
-                        // workaround for safely run perform selector
-                        if (!self) { return; }
-                        IMP imp = [self methodForSelector:aSelector];
-                        void (*func)(id, SEL) = (void *)imp;
-                        func(self, aSelector);
-                    }
+                    [self performSelector: aSelector withObject:tokens];
                 } @catch (NSException *exception) {
                 }
             }
