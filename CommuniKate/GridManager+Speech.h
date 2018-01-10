@@ -10,6 +10,10 @@
 
 
 @interface GridManager (Speech)
+
+@property (strong, nonatomic) NSString *_Nullable voiceLanguage;
+
 // Tests in use observable
--(void)speak: (NSString * _Nonnull) text;
+- (void)speak:(NSString * _Nonnull)text;
+- (void)changeVoiceLanguage:(NSString *_Nonnull)language;
 @end
