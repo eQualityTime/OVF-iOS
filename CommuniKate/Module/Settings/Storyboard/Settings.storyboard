@@ -61,8 +61,36 @@
                                     <outlet property="titleLabel" destination="g62-OL-yFj" id="ePQ-f5-qBe"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SoundOptionCell" textLabel="AWq-1F-AZc" detailTextLabel="1WO-Gs-6L1" rowHeight="86" style="IBUITableViewCellStyleValue1" id="fZb-3y-YSJ" customClass="SoundOptionCell">
+                                <rect key="frame" x="0.0" y="141.5" width="375" height="86"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fZb-3y-YSJ" id="ISg-na-zA5">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="85.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AWq-1F-AZc">
+                                            <rect key="frame" x="16" y="33" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1WO-Gs-6L1">
+                                            <rect key="frame" x="296" y="33" width="44" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="1WO-Gs-6L1" id="az3-rZ-UoO"/>
+                                    <outlet property="titleLabel" destination="AWq-1F-AZc" id="VeV-A8-c3Y"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DownloadCell" rowHeight="120" id="8U6-P1-jYF" userLabel="DownloadViewCell" customClass="DownloadCell">
-                                <rect key="frame" x="0.0" y="141.5" width="375" height="120"/>
+                                <rect key="frame" x="0.0" y="227.5" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8U6-P1-jYF" id="Acv-Ei-MLd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>

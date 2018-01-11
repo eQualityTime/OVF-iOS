@@ -55,11 +55,12 @@ extern NSString *_Nonnull const kSpeakTextNotification;
 @interface GridManager : NSObject
 
 @property (strong, nonatomic) AVSpeechSynthesizer *_Nullable synthesizer;
+
 // Core Data
 @property (readonly, strong) NSPersistentContainer * _Nullable persistentContainer;
 @property (strong, nonatomic) Settings *_Nullable settings;
 
-+ (id _Nonnull )sharedInstance;
++ (instancetype _Nonnull)sharedInstance;
 +(NSString *_Nullable)arrayToColorString:(NSArray *_Nonnull) array;
 +(UIColor *_Nullable)colorFromString:(NSString *_Nonnull)colorString;
 +(void) getImageForCell:(Cell *_Nonnull) cell inView:(CellView *_Nonnull) view rect:(CGRect) rect;

@@ -44,10 +44,14 @@
     CGFloat fontSize = [UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize;
     CGRectDivide(cellContentRect, &labelRect , &cellContentRect, fontSize, CGRectMinYEdge);
     
+    // make height bigger to prevent the lower parts of the text are cut off
+    labelRect.size.height += 3;
+    
     UILabel *nameLabel = [[UILabel alloc] initWithFrame: labelRect];
     
-    nameLabel.adjustsFontSizeToFitWidth=YES;
-    nameLabel.minimumScaleFactor=0.5;
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    nameLabel.minimumScaleFactor = 0.5;
+
     
     [nameLabel setTextAlignment: NSTextAlignmentCenter];
     [nameLabel setFont: font];

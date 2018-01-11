@@ -347,19 +347,22 @@
         if ([[tokens firstObject] isEqualToString:@"ovf"]) {
             if (tokens.count > 1) {
                 NSString *command = [NSString stringWithFormat: @"%@:", tokens[1]];
-                @try {
-                    SEL aSelector = NSSelectorFromString(command);
-                    if ([self canPerformAction:aSelector withSender:tokens]) {
-                        // workaround for safely run perform selector
-                        if (!self) { return; }
-                        IMP imp = [self methodForSelector:aSelector];
-                        void (*func)(id, SEL) = (void *)imp;
-                        func(self, aSelector);
-                    }
-                } @catch (NSException *exception) {
-                }
+                [self performCommand:command tokens:tokens];
+            }
+        } else if ([[tokens firstObject] isEqualToString:@"open"]) {
+            if (tokens.count > 1) {
+                NSString *command = [NSString stringWithFormat: @"%@:", tokens.firstObject];
+                [self performCommand:command tokens:tokens];
             }
         }
+    }
+}
+
+- (void)performCommand:(NSString *)command tokens:(NSArray *)tokens {
+    @try {
+        SEL aSelector = NSSelectorFromString(command);
+        [self performSelector:aSelector withObject:tokens];
+    } @catch (NSException *exception) {
     }
 }
 
@@ -386,9 +389,16 @@
 }
 
 - (void)open:(NSArray *)tokens {
-    if (tokens.count >= 3) {
-        Grid *grid = [Grid getGridByName: tokens[2] inManagedObjectContext:self.gridManager.managedObjectContext];
-        [self changeToGrid:(Grid *) grid];
+    if (tokens.count >= 2) {
+        
+        NSString *gridNameText = @"";
+        for (int i=1; i < tokens.count; i++) {
+            gridNameText = [NSString stringWithFormat:@"%@%@", gridNameText, tokens[i]];
+        }
+        gridNameText = [gridNameText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        Grid *grid = [Grid getGridByName:gridNameText inManagedObjectContext:self.gridManager.managedObjectContext];
+        [self changeToGrid:(Grid *)grid];
     }
 }
 

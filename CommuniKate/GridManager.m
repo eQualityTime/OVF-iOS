@@ -50,7 +50,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 
 @synthesize persistentContainer = _persistentContainer;
 
-+ (id)sharedInstance {
++ (instancetype)sharedInstance {
     static dispatch_once_t pred = 0;
     __strong static id _sharedObject = nil;
     dispatch_once(&pred, ^{
@@ -62,7 +62,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 
 - (AVSpeechSynthesizer *)synthesizer {
     if(!_synthesizer){
-        _synthesizer= [[AVSpeechSynthesizer alloc] init];
+        _synthesizer = [[AVSpeechSynthesizer alloc] init];
     }
     return _synthesizer;
 }
