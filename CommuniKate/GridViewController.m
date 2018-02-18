@@ -13,7 +13,6 @@
 #import "GridManager+Settings.h"
 #import "UIView+Layer.h"
 #import "GridView.h"
-#import "CellView.h"
 #import "UIView+Animation.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"
@@ -28,6 +27,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *googleButton;
 @property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+@property (weak, nonatomic) IBOutlet UIButton *scanningButton;
+@property (strong, nonatomic) IBOutlet UIControl *scanningView;
+@property (nonatomic) NSTimer *scanningTimer;
+@property (nonatomic) BOOL isScanning;
+@property (nonatomic) NSInteger currentScanningIndex;
+@property (nonatomic) UIView *previousScanningView;
 @end
 
 @implementation GridViewController
@@ -54,6 +59,17 @@
         [_dialogue setFont:[UIFont systemFontOfSize: 26.0f]];
     }
     return _dialogue;
+}
+
+- (void)setIsScanning:(BOOL)isScanning {
+    _isScanning = isScanning;
+    self.scanningView.hidden = !isScanning;
+    
+    if (isScanning) {
+        [self.scanningButton setImage:[UIImage imageNamed:@"switchOff"] forState:UIControlStateNormal];
+    } else {
+        [self.scanningButton setImage:[UIImage imageNamed:@"switchOn"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)viewDidLoad {
@@ -148,6 +164,80 @@
     [self navigateToWebControllerWithTitle:@"Twitter" urlString:urlString];
 }
 
+- (IBAction)scanningButtonTapped:(UIButton *)sender {
+    if (!self.isScanning) {
+        [self startScanning];
+    } else {
+        [self stopScanning];
+    }
+}
+
+- (IBAction)scanningViewTapped:(UIButton *)sender {
+    if (!self.isScanning) { return; }
+    if (!self.previousScanningView) { return; }
+
+    if ([self.previousScanningView isKindOfClass:[CellView class]]) {
+        [(CellView *)self.previousScanningView didTapView:nil];
+    } else if ([self.previousScanningView isKindOfClass:[UITextView class]]) {
+        [self speak:nil];
+    }
+}
+
+#pragma mark - Scanning
+
+- (void)startScanning {
+    self.isScanning = YES;
+    [self updateScanning];
+    self.scanningTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                     target:self
+                                   selector:@selector(updateScanning)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+- (void)stopScanning {
+    self.isScanning = NO;
+    [self.scanningTimer invalidate];
+    self.scanningTimer = nil;
+    
+    [self clearPreviousScanningView];
+    self.previousScanningView = nil;
+    self.currentScanningIndex = 0;
+}
+
+- (void)updateScanning {
+    if (!self.isScanning) { return; }
+    
+    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    if (!cellViewsToScan) { return; }
+    
+    if (self.currentScanningIndex < 0 || self.currentScanningIndex >= cellViewsToScan.count) {
+        self.currentScanningIndex = 0;
+    }
+    
+    // deactivate previous scanning view
+    [self clearPreviousScanningView];
+    
+    // activate view for scanning
+    UIView *viewToScan = cellViewsToScan[self.currentScanningIndex];
+    viewToScan.layer.borderColor = [UIColor colorWithRed:255/255.0 green:190/255.0 blue:0.0 alpha:1.0].CGColor;
+    viewToScan.layer.borderWidth = 3.0;
+    
+    self.previousScanningView = viewToScan;
+    self.currentScanningIndex++;
+}
+
+- (void)clearPreviousScanningView {
+    if (!self.previousScanningView) { return; }
+    
+    if ([self.previousScanningView isKindOfClass:[CellView class]]) {
+        self.previousScanningView.layer.borderWidth = 0.0;
+    } else if ([self.previousScanningView isKindOfClass:[UITextView class]]) {
+        // set border for dialogue
+        [self.previousScanningView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.25] CGColor]];
+        self.previousScanningView.layer.borderWidth = 1.0;
+    }
+}
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -232,6 +322,11 @@
     self.gridView.grid = grid;
     [self animateInView: self.gridView];
     [self.gridView setNeedsDisplay];
+    
+    if (self.isScanning) {
+        [self clearPreviousScanningView];
+        self.currentScanningIndex = 0;
+    }
 }
 
 // Clear up previous grid (release memory and remove notification observers)

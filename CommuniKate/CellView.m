@@ -94,7 +94,7 @@
     }
 }
 
--(void)didTapView:(UITapGestureRecognizer *)recognizer{
+- (void)didTapView:(UITapGestureRecognizer *)recognizer {
     [[NSNotificationCenter defaultCenter] postNotificationName: kDidTapViewNotification object:nil userInfo: @{@"cell": self}];
 }
 
