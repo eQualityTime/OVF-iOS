@@ -25,6 +25,8 @@
             cellHeight = cellWidth;
         }
         
+        NSMutableArray *scanningCellList = [[NSMutableArray alloc] init];
+        
         for (Cell *cell in self.grid.cells) {
             
             CGRect cellRect = CGRectZero;
@@ -35,14 +37,26 @@
             // cellRect = CGRectInset(cellRect, 1.0f, 1.0f); // margin
             CellView *view = [[CellView alloc] initWithFrame:cellRect];
             view.cell = cell;
-            
+
             [self addSubview:view];
+            [scanningCellList addObject:view];
         }
+        
+        scanningCellList = [[scanningCellList sortedArrayUsingComparator:^NSComparisonResult(CellView *a, CellView *b) {
+            double first = ([a.cell.y floatValue] * 5.0) + [a.cell.x floatValue];
+            double second = ([b.cell.y floatValue] * 5.0) + [b.cell.x floatValue];
+            return first > second;
+        }] mutableCopy];
         
         if (self.dialogue) {
             self.dialogue.frame = CGRectMake(cellWidth, 0, cellWidth*3, cellHeight);
             [self addSubview: self.dialogue];
+            if (scanningCellList.count > 1) {
+                [scanningCellList insertObject:self.dialogue atIndex:1];
+            }
         }
+        
+        self.scanningCells = scanningCellList;
 
         UIButton *speakButton = [UIButton buttonWithType:UIButtonTypeSystem];
         speakButton.frame = self.dialogue.frame;

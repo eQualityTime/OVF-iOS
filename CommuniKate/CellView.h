@@ -11,4 +11,6 @@
 
 @interface CellView : UIView
 @property (strong, nonatomic) Cell*_Nonnull cell;
+
+- (void)didTapView:(UITapGestureRecognizer *_Nullable)recognizer;
 @end
