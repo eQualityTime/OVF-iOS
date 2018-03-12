@@ -13,4 +13,5 @@
 @property (strong, nonatomic, nonnull) Grid *grid;
 @property (strong, nonatomic, nonnull) NSArray<UIView *> *scanningCells;
 @property (strong, nonatomic) UITextView * _Nullable dialogue;
+
 @end

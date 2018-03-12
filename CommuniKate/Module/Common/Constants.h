@@ -19,9 +19,15 @@
 static NSString * const kGoogleDisplayKey = @"kGoogleDisplayKey";
 static NSString * const kYoutubeDisplayKey = @"kYoutubeDisplayKey";
 static NSString * const kTwitterDisplayKey = @"kTwitterDisplayKey";
+static NSString * const kScanningStatusKey = @"kScanningStatusKey";
+static NSString * const kScanTimeKey = @"kScanTimeKey";
+
 
 // URL keys
 static NSString * const kRemoteJsonUrlKey = @"remote-json-url";
+
+// Default values
+static double const kDefaultScanningTime = 2.0;
 
 /**
  *

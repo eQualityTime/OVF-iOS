@@ -42,7 +42,8 @@
 		4BCA6FE91F22AD1600CA601F /* GridManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FE81F22AD1600CA601F /* GridManagerTests.m */; };
 		4BCA6FEF1F23EE5C00CA601F /* Settings+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEC1F23EE5C00CA601F /* Settings+CoreDataClass.m */; };
 		4BCA6FF01F23EE5C00CA601F /* Settings+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */; };
-		A6112C212005CDF700D46BA9 /* SoundOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6112C202005CDF700D46BA9 /* SoundOptionCell.m */; };
+		A6112C212005CDF700D46BA9 /* ChoseOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6112C202005CDF700D46BA9 /* ChoseOptionCell.m */; };
+		A653933220532F7A0077DC98 /* ChoseOptionCell.h in Sources */ = {isa = PBXBuildFile; fileRef = A6112C1F2005CDF700D46BA9 /* ChoseOptionCell.h */; };
 		A66B23161FEDB019003DF961 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66B23151FEDB019003DF961 /* Settings.storyboard */; };
 		A66B231A1FEDB053003DF961 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B23191FEDB053003DF961 /* SettingsViewController.m */; };
 		A66B231E1FEDBD39003DF961 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B231D1FEDBD39003DF961 /* SwitchCell.m */; };
@@ -126,8 +127,8 @@
 		4BCA6FEC1F23EE5C00CA601F /* Settings+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Settings+CoreDataClass.m"; sourceTree = "<group>"; };
 		4BCA6FED1F23EE5C00CA601F /* Settings+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Settings+CoreDataProperties.h"; sourceTree = "<group>"; };
 		4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Settings+CoreDataProperties.m"; sourceTree = "<group>"; };
-		A6112C1F2005CDF700D46BA9 /* SoundOptionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundOptionCell.h; sourceTree = "<group>"; };
-		A6112C202005CDF700D46BA9 /* SoundOptionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundOptionCell.m; sourceTree = "<group>"; };
+		A6112C1F2005CDF700D46BA9 /* ChoseOptionCell.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = ChoseOptionCell.h; sourceTree = "<group>"; };
+		A6112C202005CDF700D46BA9 /* ChoseOptionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoseOptionCell.m; sourceTree = "<group>"; };
 		A66B23151FEDB019003DF961 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		A66B23181FEDB053003DF961 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		A66B23191FEDB053003DF961 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -327,8 +328,8 @@
 				A66B231D1FEDBD39003DF961 /* SwitchCell.m */,
 				A66B23211FEE9DC7003DF961 /* DownloadCell.h */,
 				A66B23221FEE9DC7003DF961 /* DownloadCell.m */,
-				A6112C1F2005CDF700D46BA9 /* SoundOptionCell.h */,
-				A6112C202005CDF700D46BA9 /* SoundOptionCell.m */,
+				A6112C1F2005CDF700D46BA9 /* ChoseOptionCell.h */,
+				A6112C202005CDF700D46BA9 /* ChoseOptionCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -460,10 +461,11 @@
 				4B8DA8891F1CD7CB00D594F2 /* CommuniKate.xcdatamodeld in Sources */,
 				4B0EFCED1F49971700910B69 /* GridManager+Settings.m in Sources */,
 				4BA2B9261F1FE23900517D97 /* GridView.m in Sources */,
+				A653933220532F7A0077DC98 /* ChoseOptionCell.h in Sources */,
 				4BB3E7E31F1ACCE600C851AB /* Grid+CoreDataClass.m in Sources */,
 				4B8DA88D1F1CD8BB00D594F2 /* GridManager+Speech.m in Sources */,
 				4BB3E71F1F194C0100C851AB /* GridManager.m in Sources */,
-				A6112C212005CDF700D46BA9 /* SoundOptionCell.m in Sources */,
+				A6112C212005CDF700D46BA9 /* ChoseOptionCell.m in Sources */,
 				A66B23231FEE9DC7003DF961 /* DownloadCell.m in Sources */,
 				4BA2B92C1F20EB9900517D97 /* UIView+Animation.m in Sources */,
 				4BB3E7F11F1ACCE700C851AB /* Cell+CoreDataProperties.m in Sources */,

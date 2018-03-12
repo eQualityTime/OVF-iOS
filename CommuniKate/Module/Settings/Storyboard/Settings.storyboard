@@ -35,7 +35,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g62-OL-yFj">
-                                            <rect key="frame" x="24" y="15" width="42" height="56"/>
+                                            <rect key="frame" x="16" y="15" width="42" height="56"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                                         <constraint firstItem="g62-OL-yFj" firstAttribute="top" secondItem="q0o-1l-BXf" secondAttribute="topMargin" constant="4" id="Hhi-lx-pPE"/>
                                         <constraint firstItem="OZm-Pt-02d" firstAttribute="centerY" secondItem="q0o-1l-BXf" secondAttribute="centerY" id="Seg-uY-gJt"/>
                                         <constraint firstAttribute="trailing" secondItem="OZm-Pt-02d" secondAttribute="trailing" constant="8" id="bw7-z9-VFy"/>
-                                        <constraint firstItem="g62-OL-yFj" firstAttribute="leading" secondItem="q0o-1l-BXf" secondAttribute="leadingMargin" constant="8" id="epj-lq-x4O"/>
+                                        <constraint firstItem="g62-OL-yFj" firstAttribute="leading" secondItem="q0o-1l-BXf" secondAttribute="leadingMargin" id="epj-lq-x4O"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="g62-OL-yFj" secondAttribute="bottom" constant="4" id="m68-xz-erO"/>
                                         <constraint firstItem="OZm-Pt-02d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g62-OL-yFj" secondAttribute="trailing" constant="8" id="rGE-Zy-uWh"/>
                                     </constraints>
@@ -61,7 +61,7 @@
                                     <outlet property="titleLabel" destination="g62-OL-yFj" id="ePQ-f5-qBe"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SoundOptionCell" textLabel="AWq-1F-AZc" detailTextLabel="1WO-Gs-6L1" rowHeight="86" style="IBUITableViewCellStyleValue1" id="fZb-3y-YSJ" customClass="SoundOptionCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ChooseOptionCell" textLabel="AWq-1F-AZc" detailTextLabel="1WO-Gs-6L1" rowHeight="86" style="IBUITableViewCellStyleValue1" id="fZb-3y-YSJ" customClass="ChooseOptionCell">
                                 <rect key="frame" x="0.0" y="141.5" width="375" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fZb-3y-YSJ" id="ISg-na-zA5">
