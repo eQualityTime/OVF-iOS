@@ -20,6 +20,7 @@ static NSString * const kGoogleDisplayKey = @"kGoogleDisplayKey";
 static NSString * const kYoutubeDisplayKey = @"kYoutubeDisplayKey";
 static NSString * const kTwitterDisplayKey = @"kTwitterDisplayKey";
 static NSString * const kScanningStatusKey = @"kScanningStatusKey";
+static NSString * const kLinearScanningStatusKey = @"kLinearScanningStatusKey";
 static NSString * const kScanTimeKey = @"kScanTimeKey";
 
 

@@ -201,7 +201,9 @@
 - (void)updateScanning {
     if (!self.isScanning) { return; }
     
-    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    BOOL linearScanningOn = [[NSUserDefaults standardUserDefaults] boolForKey:kLinearScanningStatusKey];
+
+    NSArray *cellViewsToScan = linearScanningOn ? self.gridView.linearScanningCells : self.gridView.scanningCells;
     if (!cellViewsToScan) { return; }
     
     if (self.currentScanningIndex < 0 || self.currentScanningIndex >= cellViewsToScan.count) {

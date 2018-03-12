@@ -41,7 +41,8 @@ typedef NS_ENUM(NSUInteger, SettingsRowType) {
 
 typedef NS_ENUM(NSUInteger, ScanningRowType) {
     kScanningSwitchRow,
-    kScanningTimeRow
+    kScanningTimeRow,
+    kLinearScanningSwitchRow
 };
 
 - (void)viewDidLoad {
@@ -76,7 +77,8 @@ typedef NS_ENUM(NSUInteger, ScanningRowType) {
     self.resourceList = @[NSLocalizedString(@"", @"")];
     self.soundList = @[NSLocalizedString(@"Speaker Name", @"")];
     self.scanningList = @[NSLocalizedString(@"Scanning", @""),
-                          NSLocalizedString(@"Scanning Time", @"")
+                          NSLocalizedString(@"Scanning Time", @""),
+                          NSLocalizedString(@"Linear Scanning", @"")
                           ];
 
 }
@@ -234,28 +236,43 @@ typedef NS_ENUM(NSUInteger, ScanningRowType) {
             return cell;
         }
         case kScanningSection: {
-            if (indexPath.row == kScanningSwitchRow) {
-                SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:[SwitchCell reuseIdentifier] forIndexPath:indexPath];
-                
-                NSString *switchKey = kScanningStatusKey;
-                BOOL isSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:switchKey];
-                
-                [cell setupCellWithTitle:self.scanningList[indexPath.row] isSwitchOn:isSwitchOn valueChangedBlock:^(BOOL isSwitchOn) {
-                    [[NSUserDefaults standardUserDefaults] setBool:isSwitchOn forKey:switchKey];
-                }];
-                
-                return cell;
-            } else {
-                ChooseOptionCell *cell = (ChooseOptionCell *)[tableView dequeueReusableCellWithIdentifier:[ChooseOptionCell reuseIdentifier] forIndexPath:indexPath];
-                
-                double scanTime = [[NSUserDefaults standardUserDefaults] doubleForKey:kScanTimeKey];
-                if (scanTime == 0.0) {
-                    scanTime = kDefaultScanningTime;
+            switch (indexPath.row) {
+                case kScanningSwitchRow: {
+                    SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:[SwitchCell reuseIdentifier] forIndexPath:indexPath];
+                    
+                    BOOL isSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kScanningStatusKey];
+                    
+                    [cell setupCellWithTitle:self.scanningList[indexPath.row] isSwitchOn:isSwitchOn valueChangedBlock:^(BOOL isSwitchOn) {
+                        [[NSUserDefaults standardUserDefaults] setBool:isSwitchOn forKey:kScanningStatusKey];
+                    }];
+                    
+                    return cell;
                 }
-                NSString *scanningValue = [NSString stringWithFormat:@"%.1lf", scanTime];
-                NSString *title = self.scanningList[indexPath.row];
-                [cell setupCellWithTitle:title value:scanningValue];
-                return cell;
+                case kScanningTimeRow: {
+                    ChooseOptionCell *cell = (ChooseOptionCell *)[tableView dequeueReusableCellWithIdentifier:[ChooseOptionCell reuseIdentifier] forIndexPath:indexPath];
+                    
+                    double scanTime = [[NSUserDefaults standardUserDefaults] doubleForKey:kScanTimeKey];
+                    if (scanTime == 0.0) {
+                        scanTime = kDefaultScanningTime;
+                    }
+                    NSString *scanningValue = [NSString stringWithFormat:@"%.1lf", scanTime];
+                    NSString *title = self.scanningList[indexPath.row];
+                    [cell setupCellWithTitle:title value:scanningValue];
+                    return cell;
+                }
+                case kLinearScanningSwitchRow: {
+                    SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:[SwitchCell reuseIdentifier] forIndexPath:indexPath];
+                    
+                    BOOL isSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kLinearScanningStatusKey];
+                    
+                    [cell setupCellWithTitle:self.scanningList[indexPath.row] isSwitchOn:isSwitchOn valueChangedBlock:^(BOOL isSwitchOn) {
+                        [[NSUserDefaults standardUserDefaults] setBool:isSwitchOn forKey:kLinearScanningStatusKey];
+                    }];
+                    
+                    return cell;
+                }
+                default:
+                    break;
             }
         }
         default:
