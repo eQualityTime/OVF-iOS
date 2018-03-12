@@ -1,5 +1,5 @@
 //
-//  SoundOptionCell.h
+//  ChooseOptionCell.h
 //  CommuniKate
 //
 //  Created by Ahmet Yalcinkaya on 10.01.2018.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SoundOptionCell : UITableViewCell
+@interface ChooseOptionCell : UITableViewCell
 
-- (void)setupCellWithSpeakerName:(NSString *)name;
+- (void)setupCellWithTitle:(NSString *)title value:(NSString *)value;
 
 @end

@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *googleButton;
 @property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
-@property (weak, nonatomic) IBOutlet UIButton *scanningButton;
 @property (strong, nonatomic) IBOutlet UIControl *scanningView;
 @property (nonatomic) NSTimer *scanningTimer;
 @property (nonatomic) BOOL isScanning;
@@ -64,12 +63,6 @@
 - (void)setIsScanning:(BOOL)isScanning {
     _isScanning = isScanning;
     self.scanningView.hidden = !isScanning;
-    
-    if (isScanning) {
-        [self.scanningButton setImage:[UIImage imageNamed:@"switchOff"] forState:UIControlStateNormal];
-    } else {
-        [self.scanningButton setImage:[UIImage imageNamed:@"switchOn"] forState:UIControlStateNormal];
-    }
 }
 
 - (void)viewDidLoad {
@@ -112,6 +105,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidTapViewNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kSpeakTextNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDownloadUnexpectedFormatErrorNotification object:nil];
+    
+    [self stopScanning];
 }
 
 - (void)dealloc {
@@ -164,14 +159,6 @@
     [self navigateToWebControllerWithTitle:@"Twitter" urlString:urlString];
 }
 
-- (IBAction)scanningButtonTapped:(UIButton *)sender {
-    if (!self.isScanning) {
-        [self startScanning];
-    } else {
-        [self stopScanning];
-    }
-}
-
 - (IBAction)scanningViewTapped:(UIButton *)sender {
     if (!self.isScanning) { return; }
     if (!self.previousScanningView) { return; }
@@ -187,8 +174,14 @@
 
 - (void)startScanning {
     self.isScanning = YES;
-    [self updateScanning];
-    self.scanningTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f
+
+    double scanTime = [[NSUserDefaults standardUserDefaults] doubleForKey:kScanTimeKey];
+    if (scanTime == 0.0) {
+        scanTime = kDefaultScanningTime;
+    }
+    
+    [self performSelector:@selector(updateScanning) withObject:nil afterDelay:0.05];
+    self.scanningTimer = [NSTimer scheduledTimerWithTimeInterval:scanTime
                                      target:self
                                    selector:@selector(updateScanning)
                                    userInfo:nil
@@ -208,7 +201,9 @@
 - (void)updateScanning {
     if (!self.isScanning) { return; }
     
-    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    BOOL linearScanningOn = [[NSUserDefaults standardUserDefaults] boolForKey:kLinearScanningStatusKey];
+
+    NSArray *cellViewsToScan = linearScanningOn ? self.gridView.linearScanningCells : self.gridView.scanningCells;
     if (!cellViewsToScan) { return; }
     
     if (self.currentScanningIndex < 0 || self.currentScanningIndex >= cellViewsToScan.count) {
@@ -320,12 +315,15 @@
 - (void)changeToGrid:(Grid *)grid {
     [self clearGridView];
     self.gridView.grid = grid;
-    [self animateInView: self.gridView];
-    [self.gridView setNeedsDisplay];
+    [self animateInView:self.gridView];
+    [self.gridView setNeedsLayout];
     
-    if (self.isScanning) {
-        [self clearPreviousScanningView];
-        self.currentScanningIndex = 0;
+    BOOL isScanningSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kScanningStatusKey];
+    if (isScanningSwitchOn) {
+        [self stopScanning];
+        [self startScanning];
+    } else {
+        [self stopScanning];
     }
 }
 
@@ -428,7 +426,7 @@
                     }
                 }
             }
-            [self changeToGrid: cell.link.grid];
+            [self changeToGrid:cell.link.grid];
         }
     }
 }

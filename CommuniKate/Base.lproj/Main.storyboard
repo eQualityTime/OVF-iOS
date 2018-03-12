@@ -43,7 +43,7 @@
                                 <rect key="frame" x="623" y="0.0" width="44" height="375"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nhD-2m-DgH">
-                                        <rect key="frame" x="0.0" y="72.5" width="44" height="230"/>
+                                        <rect key="frame" x="0.0" y="97.5" width="44" height="180"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhH-07-xrQ">
                                                 <rect key="frame" x="7" y="0.0" width="30" height="30"/>
@@ -89,21 +89,7 @@
                                                     <action selector="twitterButtonTapped:" destination="AZn-bE-9Yj" eventType="touchUpInside" id="BJe-Y3-qCe"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbO-AR-Kvz">
-                                                <rect key="frame" x="7" y="200" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="rvf-G8-UcX"/>
-                                                    <constraint firstAttribute="width" secondItem="fbO-AR-Kvz" secondAttribute="height" id="uri-wi-eRR"/>
-                                                </constraints>
-                                                <state key="normal" image="switchOn"/>
-                                                <connections>
-                                                    <action selector="scanningButtonTapped:" destination="AZn-bE-9Yj" eventType="touchUpInside" id="QcZ-We-4bU"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="fbO-AR-Kvz" firstAttribute="width" secondItem="fbO-AR-Kvz" secondAttribute="height" id="d4O-VW-4TM"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1333333333" green="0.15686274510000001" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -133,7 +119,6 @@
                     <connections>
                         <outlet property="googleButton" destination="FId-I0-RgA" id="fQL-Vd-QtB"/>
                         <outlet property="gridView" destination="1vJ-J4-ZJv" id="68C-Yn-SXS"/>
-                        <outlet property="scanningButton" destination="fbO-AR-Kvz" id="1DN-rI-QQE"/>
                         <outlet property="scanningView" destination="oYr-kM-lqa" id="jX9-ls-jUK"/>
                         <outlet property="twitterButton" destination="pni-gV-WUp" id="3Eh-uU-8v0"/>
                         <outlet property="youtubeButton" destination="Opw-UD-6in" id="kdm-fT-11n"/>
@@ -212,7 +197,6 @@
     <resources>
         <image name="google" width="66" height="66"/>
         <image name="settings" width="44" height="44"/>
-        <image name="switchOn" width="32" height="32"/>
         <image name="twitter" width="66" height="66"/>
         <image name="you-tube" width="66" height="66"/>
     </resources>
