@@ -43,12 +43,15 @@
 		4BCA6FEF1F23EE5C00CA601F /* Settings+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEC1F23EE5C00CA601F /* Settings+CoreDataClass.m */; };
 		4BCA6FF01F23EE5C00CA601F /* Settings+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */; };
 		A6112C212005CDF700D46BA9 /* ChoseOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6112C202005CDF700D46BA9 /* ChoseOptionCell.m */; };
+		A61B0F0B207AA14300C62AE4 /* ScanningCoordinatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A61B0F0A207AA14300C62AE4 /* ScanningCoordinatorTests.m */; };
 		A653933220532F7A0077DC98 /* ChoseOptionCell.h in Sources */ = {isa = PBXBuildFile; fileRef = A6112C1F2005CDF700D46BA9 /* ChoseOptionCell.h */; };
 		A66B23161FEDB019003DF961 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A66B23151FEDB019003DF961 /* Settings.storyboard */; };
 		A66B231A1FEDB053003DF961 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B23191FEDB053003DF961 /* SettingsViewController.m */; };
 		A66B231E1FEDBD39003DF961 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B231D1FEDBD39003DF961 /* SwitchCell.m */; };
 		A66B23231FEE9DC7003DF961 /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B23221FEE9DC7003DF961 /* DownloadCell.m */; };
 		A66B23271FEEA8FC003DF961 /* UITableViewCell+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A66B23261FEEA8FC003DF961 /* UITableViewCell+Category.m */; };
+		A690844D2078270E00D51F9A /* ScanningCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A690844C2078270E00D51F9A /* ScanningCoordinator.m */; };
+		A6E896012081E33600D9C0E5 /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E896002081E33600D9C0E5 /* UIView+Category.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +132,7 @@
 		4BCA6FEE1F23EE5C00CA601F /* Settings+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Settings+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A6112C1F2005CDF700D46BA9 /* ChoseOptionCell.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = ChoseOptionCell.h; sourceTree = "<group>"; };
 		A6112C202005CDF700D46BA9 /* ChoseOptionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoseOptionCell.m; sourceTree = "<group>"; };
+		A61B0F0A207AA14300C62AE4 /* ScanningCoordinatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanningCoordinatorTests.m; sourceTree = "<group>"; };
 		A66B23151FEDB019003DF961 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		A66B23181FEDB053003DF961 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		A66B23191FEDB053003DF961 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -139,6 +143,10 @@
 		A66B23221FEE9DC7003DF961 /* DownloadCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCell.m; sourceTree = "<group>"; };
 		A66B23251FEEA8FC003DF961 /* UITableViewCell+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+Category.h"; sourceTree = "<group>"; };
 		A66B23261FEEA8FC003DF961 /* UITableViewCell+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+Category.m"; sourceTree = "<group>"; };
+		A690844B2078270E00D51F9A /* ScanningCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanningCoordinator.h; sourceTree = "<group>"; };
+		A690844C2078270E00D51F9A /* ScanningCoordinator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanningCoordinator.m; sourceTree = "<group>"; };
+		A6E895FF2081E33600D9C0E5 /* UIView+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
+		A6E896002081E33600D9C0E5 /* UIView+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +224,7 @@
 				4B6387031F255AF1005A45A1 /* GridViewControllerTests.m */,
 				4B0EFCE91F49962F00910B69 /* GridManagerSettingsTests.m */,
 				4B44FB601F1791C400A61B39 /* Info.plist */,
+				A61B0F0A207AA14300C62AE4 /* ScanningCoordinatorTests.m */,
 			);
 			path = CommuniKateTests;
 			sourceTree = "<group>";
@@ -338,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				A66B23241FEEA8A1003DF961 /* Category */,
+				A69084472078261D00D51F9A /* Coordinator */,
 				A66B23201FEE76E4003DF961 /* Constants.h */,
 			);
 			path = Common;
@@ -348,9 +358,21 @@
 			children = (
 				A66B23251FEEA8FC003DF961 /* UITableViewCell+Category.h */,
 				A66B23261FEEA8FC003DF961 /* UITableViewCell+Category.m */,
+				A6E895FF2081E33600D9C0E5 /* UIView+Category.h */,
+				A6E896002081E33600D9C0E5 /* UIView+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
+		};
+		A69084472078261D00D51F9A /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				A690844B2078270E00D51F9A /* ScanningCoordinator.h */,
+				A690844C2078270E00D51F9A /* ScanningCoordinator.m */,
+			);
+			name = Coordinator;
+			path = CommuniKate/Module/Common/Coordinator;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -396,7 +418,7 @@
 		4B44FB361F1791BF00A61B39 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Flickaway Limited";
 				TargetAttributes = {
 					4B44FB3D1F1791C000A61B39 = {
@@ -471,9 +493,11 @@
 				4BB3E7F11F1ACCE700C851AB /* Cell+CoreDataProperties.m in Sources */,
 				4B0EFCE51F45F9AA00910B69 /* UIView+Layer.m in Sources */,
 				A66B23271FEEA8FC003DF961 /* UITableViewCell+Category.m in Sources */,
+				A6E896012081E33600D9C0E5 /* UIView+Category.m in Sources */,
 				4BB3E7E71F1ACCE700C851AB /* Link+CoreDataClass.m in Sources */,
 				4BB3E7201F194C0100C851AB /* GridManager+Network.m in Sources */,
 				4BCA6FEF1F23EE5C00CA601F /* Settings+CoreDataClass.m in Sources */,
+				A690844D2078270E00D51F9A /* ScanningCoordinator.m in Sources */,
 				4B44FB461F1791C200A61B39 /* AppDelegate.m in Sources */,
 				A66B231E1FEDBD39003DF961 /* SwitchCell.m in Sources */,
 				4BCA6FE71F22359C00CA601F /* WebViewController.m in Sources */,
@@ -497,6 +521,7 @@
 				4B6387041F255AF1005A45A1 /* GridViewControllerTests.m in Sources */,
 				4BCA6FE91F22AD1600CA601F /* GridManagerTests.m in Sources */,
 				4B0EFCEA1F49963000910B69 /* GridManagerSettingsTests.m in Sources */,
+				A61B0F0B207AA14300C62AE4 /* ScanningCoordinatorTests.m in Sources */,
 				4B6387061F25E2C0005A45A1 /* GridManagerStoreTests.m in Sources */,
 				4B6387121F260E9F005A45A1 /* CommuniKateTests.m in Sources */,
 				4B6387081F25E66C005A45A1 /* GridManagerNetworkTests.m in Sources */,
@@ -552,6 +577,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -559,6 +585,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -609,6 +636,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -616,6 +644,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

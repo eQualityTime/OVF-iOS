@@ -48,29 +48,17 @@
             return first > second;
         }] mutableCopy];
         
-        NSMutableArray *linearCellList = [NSMutableArray new];
-
-        linearCellList = [[scanningCellList sortedArrayUsingComparator:^NSComparisonResult(CellView *a, CellView *b) {
-            double first = ([a.cell.x floatValue] * 5.0) + [a.cell.y floatValue];
-            double second = ([b.cell.x floatValue] * 5.0) + [b.cell.y floatValue];
-            return first > second;
-        }] mutableCopy];
-        
         if (self.dialogue) {
             self.dialogue.frame = CGRectMake(cellWidth, 0, cellWidth*3, cellHeight);
             [self addSubview: self.dialogue];
             if (scanningCellList.count > 1) {
                 [scanningCellList insertObject:self.dialogue atIndex:1];
             }
-            
-            if (linearCellList.count > 5) {
-                [linearCellList insertObject:self.dialogue atIndex:5];
-            }
         }
         
         self.scanningCells = scanningCellList;
-        self.linearScanningCells = linearCellList;
-
+        self.cellHeight = cellHeight;
+        
         UIButton *speakButton = [UIButton buttonWithType:UIButtonTypeSystem];
         speakButton.frame = self.dialogue.frame;
         [speakButton addTarget:self action:@selector(speak:) forControlEvents:UIControlEventTouchUpInside];

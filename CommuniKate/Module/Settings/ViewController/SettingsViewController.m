@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, SettingsRowType) {
 typedef NS_ENUM(NSUInteger, ScanningRowType) {
     kScanningSwitchRow,
     kScanningTimeRow,
-    kLinearScanningSwitchRow
+    kRowColumnScanningSwitchRow
 };
 
 - (void)viewDidLoad {
@@ -78,7 +78,7 @@ typedef NS_ENUM(NSUInteger, ScanningRowType) {
     self.soundList = @[NSLocalizedString(@"Speaker Name", @"")];
     self.scanningList = @[NSLocalizedString(@"Scanning", @""),
                           NSLocalizedString(@"Scanning Time", @""),
-                          NSLocalizedString(@"Linear Scanning", @"")
+                          NSLocalizedString(@"Row/Column Scanning", @"")
                           ];
 
 }
@@ -260,13 +260,13 @@ typedef NS_ENUM(NSUInteger, ScanningRowType) {
                     [cell setupCellWithTitle:title value:scanningValue];
                     return cell;
                 }
-                case kLinearScanningSwitchRow: {
+                case kRowColumnScanningSwitchRow: {
                     SwitchCell *cell = (SwitchCell *)[tableView dequeueReusableCellWithIdentifier:[SwitchCell reuseIdentifier] forIndexPath:indexPath];
                     
-                    BOOL isSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kLinearScanningStatusKey];
+                    BOOL isSwitchOn = [[NSUserDefaults standardUserDefaults] boolForKey:kRowColumnScanningIsOnKey];
                     
                     [cell setupCellWithTitle:self.scanningList[indexPath.row] isSwitchOn:isSwitchOn valueChangedBlock:^(BOOL isSwitchOn) {
-                        [[NSUserDefaults standardUserDefaults] setBool:isSwitchOn forKey:kLinearScanningStatusKey];
+                        [[NSUserDefaults standardUserDefaults] setBool:isSwitchOn forKey:kRowColumnScanningIsOnKey];
                     }];
                     
                     return cell;

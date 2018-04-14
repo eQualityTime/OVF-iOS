@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ScanningCoordinator.h"
 
 @class GridManager;
 @class Grid;
 @class Cell;
 
-@interface GridViewController : UIViewController
+@interface GridViewController : UIViewController<LinearScanningProtocol, RowColumnScanningProtocol>
 
 - (GridManager *)gridManager;
 - (UITextView *)dialogue;
