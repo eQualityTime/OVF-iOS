@@ -14,6 +14,7 @@
 #import "UIView+Layer.h"
 #import "GridView.h"
 #import "UIView+Animation.h"
+#import "UIView+Category.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"
 #import "Constants.h"
@@ -28,10 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *youtubeButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (strong, nonatomic) IBOutlet UIControl *scanningView;
-@property (nonatomic) NSTimer *scanningTimer;
-@property (nonatomic) BOOL isScanning;
-@property (nonatomic) NSInteger currentScanningIndex;
-@property (nonatomic) UIView *previousScanningView;
+@property (nonatomic) ScanningCoordinator *scanningCoordinator;
+@property (nonatomic) UIView *scanningRow;
 @end
 
 @implementation GridViewController
@@ -60,9 +59,21 @@
     return _dialogue;
 }
 
-- (void)setIsScanning:(BOOL)isScanning {
-    _isScanning = isScanning;
-    self.scanningView.hidden = !isScanning;
+- (UIView *)scanningRowForIndex:(NSInteger)rowIndex {
+    UIView *row = [UIView new];
+    row.frame = CGRectMake(0, rowIndex * self.gridView.cellHeight, self.gridView.frame.size.width, self.gridView.cellHeight);
+    [row addScanningBorder];
+    row.userInteractionEnabled = NO;
+    return row;
+}
+
+- (NSArray<UIView *> *)scanningCellsForIndex:(NSInteger)rowIndex {
+    return [self.gridView.scanningCells filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CellView *object, NSDictionary *bindings) {
+        if ([object isKindOfClass:[UITextView class]]) {
+            return rowIndex == 0;
+        }
+        return object.cell.y.integerValue == rowIndex;
+    }]];
 }
 
 - (void)viewDidLoad {
@@ -122,6 +133,9 @@
 - (void)prepareUI {
     // Instantiate dialogue text view that will be shared when the grid changes
     self.gridView.dialogue = self.gridView.dialogue ? self.gridView.dialogue : self.dialogue;
+    
+    self.scanningCoordinator = [ScanningCoordinator new];
+    self.scanningCoordinator.scanningController = self;
 }
 
 - (void)hideButtonsIfNeeded {
@@ -160,79 +174,128 @@
 }
 
 - (IBAction)scanningViewTapped:(UIButton *)sender {
-    if (!self.isScanning) { return; }
-    if (!self.previousScanningView) { return; }
+    if (!self.scanningCoordinator.isScanning) { return; }
 
-    if ([self.previousScanningView isKindOfClass:[CellView class]]) {
-        [(CellView *)self.previousScanningView didTapView:nil];
-    } else if ([self.previousScanningView isKindOfClass:[UITextView class]]) {
-        [self speak:nil];
+    switch (self.scanningCoordinator.mode) {
+        case kScanningModeLinear:
+            [self linearScanningViewTapped];
+            break;
+        case kScanningModeRowColumn:
+            [self rowColumnScanningViewTapped];
+            break;
+    }
+}
+
+- (void)linearScanningViewTapped {
+    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    UIView *previousScanningView = cellViewsToScan[self.scanningCoordinator.previousScanningIndex];
+    [self scanningActivatedForView:previousScanningView];
+}
+
+- (void)rowColumnScanningViewTapped {
+    if (self.scanningCoordinator.rowColumnScanningMode == kRowColumnScanningModeRow) {
+        self.scanningCoordinator.rowColumnScanningMode = kRowColumnScanningModeColumn;
+        [self.scanningCoordinator.scanningTimer fire];
+    } else {
+        NSArray *cellViewsToScan = [self scanningCellsForIndex:self.scanningCoordinator.previousScanningRowIndex];
+        UIView *previousScanningView = cellViewsToScan[self.scanningCoordinator.previousScanningIndex];
+        [self scanningActivatedForView:previousScanningView];
+        
+        [self clearPreviousScanningViewForColumn];
+        self.scanningCoordinator.rowColumnScanningMode = kRowColumnScanningModeRow;
+        self.scanningCoordinator.currentScanningIndex = 0;
+        self.scanningCoordinator.previousScanningIndex = 0;
     }
 }
 
 #pragma mark - Scanning
 
 - (void)startScanning {
-    self.isScanning = YES;
-
-    double scanTime = [[NSUserDefaults standardUserDefaults] doubleForKey:kScanTimeKey];
-    if (scanTime == 0.0) {
-        scanTime = kDefaultScanningTime;
-    }
-    
-    [self performSelector:@selector(updateScanning) withObject:nil afterDelay:0.05];
-    self.scanningTimer = [NSTimer scheduledTimerWithTimeInterval:scanTime
-                                     target:self
-                                   selector:@selector(updateScanning)
-                                   userInfo:nil
-                                    repeats:YES];
+    self.scanningView.hidden = NO;
+    [self.scanningCoordinator startScanning];
 }
 
 - (void)stopScanning {
-    self.isScanning = NO;
-    [self.scanningTimer invalidate];
-    self.scanningTimer = nil;
-    
+    self.scanningView.hidden = YES;
+    [self clearPreviousScanningRow];
     [self clearPreviousScanningView];
-    self.previousScanningView = nil;
-    self.currentScanningIndex = 0;
+    [self.scanningCoordinator stopScanning];
 }
 
-- (void)updateScanning {
-    if (!self.isScanning) { return; }
-    
-    BOOL linearScanningOn = [[NSUserDefaults standardUserDefaults] boolForKey:kLinearScanningStatusKey];
+- (void)updateLinearScanning {
+    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    if (!cellViewsToScan) { return; }
 
-    NSArray *cellViewsToScan = linearScanningOn ? self.gridView.linearScanningCells : self.gridView.scanningCells;
+    // activate view for scanning
+    UIView *viewToScan = cellViewsToScan[self.scanningCoordinator.currentScanningIndex];
+    [viewToScan addScanningBorder];
+}
+
+- (void)updateRowColumnScanning {
+    NSArray *cellViewsToScan = self.gridView.scanningCells;
     if (!cellViewsToScan) { return; }
     
-    if (self.currentScanningIndex < 0 || self.currentScanningIndex >= cellViewsToScan.count) {
-        self.currentScanningIndex = 0;
+    // activate view for scanning
+    NSInteger rowIndex = self.scanningCoordinator.currentScanningRowIndex;
+    self.scanningRow = [self scanningRowForIndex:rowIndex];
+    
+    [self.view addSubview:self.scanningRow];
+}
+
+- (void)updateRowColumnScanningModeColumn {
+    NSArray *cellViewsToScan = [self scanningCellsForIndex:self.scanningCoordinator.previousScanningRowIndex];
+    if (!cellViewsToScan) { return; }
+    
+    if (self.scanningCoordinator.currentScanningIndex < 0 || self.scanningCoordinator.currentScanningIndex >= cellViewsToScan.count) {
+        self.scanningCoordinator.currentScanningIndex = 0;
     }
     
-    // deactivate previous scanning view
-    [self clearPreviousScanningView];
-    
     // activate view for scanning
-    UIView *viewToScan = cellViewsToScan[self.currentScanningIndex];
-    viewToScan.layer.borderColor = [UIColor colorWithRed:255/255.0 green:190/255.0 blue:0.0 alpha:1.0].CGColor;
-    viewToScan.layer.borderWidth = 3.0;
-    
-    self.previousScanningView = viewToScan;
-    self.currentScanningIndex++;
+    UIView *viewToScan = cellViewsToScan[self.scanningCoordinator.currentScanningIndex];
+    [viewToScan addScanningBorder];
 }
 
 - (void)clearPreviousScanningView {
-    if (!self.previousScanningView) { return; }
+    NSArray *cellViewsToScan = self.gridView.scanningCells;
+    if (!cellViewsToScan) { return; }
+
+    if (self.scanningCoordinator.currentScanningIndex < 0 || self.scanningCoordinator.currentScanningIndex >= cellViewsToScan.count) {
+        self.scanningCoordinator.currentScanningIndex = 0;
+    }
     
-    if ([self.previousScanningView isKindOfClass:[CellView class]]) {
-        self.previousScanningView.layer.borderWidth = 0.0;
-    } else if ([self.previousScanningView isKindOfClass:[UITextView class]]) {
-        // set border for dialogue
-        [self.previousScanningView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.25] CGColor]];
-        self.previousScanningView.layer.borderWidth = 1.0;
+    UIView *previousScanningView = cellViewsToScan[self.scanningCoordinator.previousScanningIndex];
+    if (!previousScanningView) { return; }
+    [previousScanningView removeScanningBorder];
+}
+
+- (void)clearPreviousScanningViewForColumn {
+    NSArray *cellViewsToScan = [self scanningCellsForIndex:self.scanningCoordinator.previousScanningRowIndex];
+    if (!cellViewsToScan) { return; }
+    
+    if (self.scanningCoordinator.currentScanningIndex < 0 || self.scanningCoordinator.currentScanningIndex >= cellViewsToScan.count) {
+        self.scanningCoordinator.currentScanningIndex = 0;
+    }
+    
+    UIView *previousScanningView = cellViewsToScan[self.scanningCoordinator.previousScanningIndex];
+    if (!previousScanningView) { return; }
+    [previousScanningView removeScanningBorder];
+}
+
+- (void)clearPreviousScanningRow {
+    if (!self.scanningRow) return;
+
+    [self.scanningRow removeFromSuperview];
+    self.scanningRow = nil;
+}
+
+- (void)scanningActivatedForView:(UIView *)view {
+    if ([view isKindOfClass:[CellView class]]) {
+        [(CellView *)view didTapView:nil];
+    } else if ([view isKindOfClass:[UITextView class]]) {
+        [self speak:nil];
     }
 }
+
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
