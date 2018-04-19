@@ -83,7 +83,7 @@
     XCTAssert(self.coordinator.currentScanningIndex == 1);
     XCTAssert(self.coordinator.currentScanningRowIndex == 2);
     
-    [self wait:0.15];
+    [self wait:0.3];
 
     XCTAssert(self.coordinator.previousScanningIndex == 1);
     XCTAssert(self.coordinator.currentScanningIndex == 2);
