@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="17A344b" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Cell" representedClassName="Cell" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasImage" optional="YES" attributeType="Boolean" defaultValueString="NO" allowsExternalBinaryDataStorage="YES" usesScalarValueType="YES" syncable="YES"/>
@@ -12,7 +12,7 @@
         <relationship name="link" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="cell" inverseEntity="Link" syncable="YES"/>
     </entity>
     <entity name="Grid" representedClassName="Grid" syncable="YES">
-        <attribute name="gridID" optional="YES" attributeType="Decimal" defaultValueString="0" syncable="YES"/>
+        <attribute name="gridID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="cells" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Cell" inverseName="grid" inverseEntity="Cell" syncable="YES"/>
         <relationship name="link" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="grid" inverseEntity="Link" syncable="YES"/>

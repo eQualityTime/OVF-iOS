@@ -19,7 +19,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    NSURL *url = [GridManager getJSONURL];
+    NSURL *url = [GridManager getRemoteURL];
     if (url) {
         self.urlTextField.text = [NSString stringWithFormat:@"%@", url];
     }
@@ -30,14 +30,9 @@
 }
 
 - (IBAction)download:(UIButton *)sender {
-    NSArray *tokens = [self.urlTextField.text componentsSeparatedByString:@"://"];
-    if ([[tokens firstObject] isEqualToString:@"https"]) {
-        self.messageLabel.text = @" ";
-        NSURL *url = [NSURL URLWithString:self.urlTextField.text];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kGridsNeedDownloadingNotification object:self userInfo:@{@"url": url}];
-        self.downloadRequestedBlock();
-    } else {
-        self.messageLabel.text = NSLocalizedString(@"Resourse must be from a secure site, for example https://...", nil);
-    }
+    self.messageLabel.text = @" ";
+    NSURL *url = [NSURL URLWithString:self.urlTextField.text];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kGridsNeedDownloadingNotification object:self userInfo:@{@"url": url}];
+    self.downloadRequestedBlock();
 }
 @end
