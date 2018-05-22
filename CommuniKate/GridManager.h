@@ -45,6 +45,8 @@ extern NSString *_Nonnull const kGridKey;
 extern NSString *_Nonnull const  kJSONFolder;
 //Grid
 extern NSString *_Nonnull const kDefaultGrid;
+extern NSString *_Nonnull const kDefaultOBZGrid;
+
 // Site Links
 extern NSString *_Nonnull const  kTwitter;
 extern NSString *_Nonnull const kGoogle;
@@ -62,12 +64,13 @@ extern NSString *_Nonnull const kSpeakTextNotification;
 
 + (instancetype _Nonnull)sharedInstance;
 +(NSString *_Nullable)arrayToColorString:(NSArray *_Nonnull) array;
++ (NSArray *)colorStringToArray:(NSString *)colorString;
 +(UIColor *_Nullable)colorFromString:(NSString *_Nonnull)colorString;
 +(void) getImageForCell:(Cell *_Nonnull) cell inView:(CellView *_Nonnull) view rect:(CGRect) rect;
 
 +(void)setDomain:(NSURL *_Nonnull) domain;
 +(void)clearDomain;
-+(NSURL *_Nullable)getJSONURL;
++(NSURL *_Nullable)getRemoteURL;
 +(NSURL *_Nullable)getDomain;
 
 -(NSManagedObjectContext *_Nullable)managedObjectContext;

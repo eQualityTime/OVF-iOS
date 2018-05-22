@@ -7,6 +7,7 @@
 
 #import "GridManager+Network.h"
 #import "GridManager+Store.h"
+#import "OBZDownloadManager.h"
 
 // For Host reachability
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -57,9 +58,37 @@
     } error:^(NSError * _Nonnull error) {
         // Attempt to download JSON data failed
         errorHandler(error);
-        // [[NSNotificationCenter defaultCenter] postNotificationName: kApplicationRaisedAnException object:self userInfo: @{@"NSERROR" : error}];
-        // NSLog(@"error message: \nError caused by: \n%@ User info: \n%@",  [error description], [error userInfo]);
-        // abort();
+    }];
+}
+
++ (void)downloadOBZFromURL:(NSURL *_Nonnull)url complition:(void (^_Nullable)(BOOL success))completionHandler error:(void (^_Nullable)(NSError * _Nullable error))errorHandler {
+    [GridManager getOBZ:url completion: ^(NSData * _Nonnull data) {
+        
+        if (data) {
+            NSDictionary *grids = [[OBZDownloadManager new] convertOBZDataDictionary:data];
+            
+            [GridManager saveJSON:grids completion:^(BOOL success) {
+                if(success){
+                    [GridManager setDomain:url];
+                    completionHandler(success);
+                }
+            } error:^(NSError *error) {
+                // Possible causes to reach here are insufficent storage space or security settings denying write permission, examine error for details
+                errorHandler(error);
+            }];
+        } else {
+            NSDictionary *errorDetails = @{
+                                           @"error": NSLocalizedString(@"Download Error", nil),
+                                           @"message": NSLocalizedString(@"Download format not recognised, please check your source", nil),
+                                           };
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName: kDownloadFailedErrorNotification object:self userInfo: errorDetails];
+            completionHandler(false);
+        }
+        
+    } error:^(NSError * _Nonnull error) {
+        // Attempt to download JSON data failed
+        errorHandler(error);
     }];
 }
 
@@ -92,7 +121,7 @@
     }
 }
 
-+(void)getJSON:(NSURL  *_Nonnull ) url completion:(void (^)(NSDictionary *data)) completionHandler error: (void (^)(NSError *error)) errorHandler{
++ (void)getJSON:(NSURL  *_Nonnull )url completion:(void (^)(NSDictionary *data)) completionHandler error: (void (^)(NSError *error)) errorHandler{
     [GridManager get:url completion:^(NSData *data) {
         NSError *error = nil;
         NSDictionary *dataDictionary= [NSJSONSerialization JSONObjectWithData: data options:NSJSONReadingMutableContainers error: &error];
@@ -106,6 +135,20 @@
             }
         } else {
             completionHandler(nil);
+        }
+    } error:^(NSError *error) {
+        errorHandler(error);
+    }];
+}
+
++ (void)getOBZ:(NSURL  *_Nonnull )url completion:(void (^)(NSData *data)) completionHandler error: (void (^)(NSError *error)) errorHandler {
+    [GridManager get:url completion:^(NSData *data) {
+        NSError *error = nil;
+
+        if (!error) {
+            completionHandler(data);
+        } else{
+            errorHandler(error);
         }
     } error:^(NSError *error) {
         errorHandler(error);

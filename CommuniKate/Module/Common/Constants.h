@@ -35,6 +35,6 @@ static double const kDefaultScanningTime = 2.0;
  *  URL
  *
  **/
-static NSString * const kRemoteURLString = @"https://equalitytime.github.io/CommuniKate/demos/CK20V2.pptx/pageset.json";
+static NSString * const kRemoteURLString = @"http://designs.theopenvoicefactory.org/clare/data/pageset.obz";
 
 #endif /* Constants_h */

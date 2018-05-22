@@ -112,7 +112,7 @@
 }
 
 +(NSURL *)JSONDownloadURL{
-    return [GridManager getJSONURL];
+    return [GridManager getRemoteURL];
 }
 
 +(void)readJSON: (NSString*) filename completion:(void (^)(NSDictionary *data)) completionHandler error: (void (^)(NSError *error)) errorHandler{

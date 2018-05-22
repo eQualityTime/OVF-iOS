@@ -72,7 +72,7 @@
                     
                     NSDictionary *grid = jsonDictionary[key];
                     newGrid.name = grid[@"name"];
-                    newGrid.gridID = grid[@"gridID"];
+                    newGrid.gridID = [grid[@"gridID"] description];
                     
                     for (NSDictionary* cell in grid[@"cells"]) {
                         Cell *newCell = [NSEntityDescription insertNewObjectForEntityForName:@"Cell" inManagedObjectContext: context];

@@ -33,6 +33,8 @@ NSString *const kGridKey = @"Grid";
 NSString *const  kJSONFolder = @"json";
 // Grid
 NSString *const  kDefaultGrid=@"toppage";
+NSString *const  kDefaultOBZGrid=@"CommuniKate toppage";
+
 // Site Links
 NSString *const kTwitter = @"https://twitter.com/intent/tweet?text=%@";
 NSString *const kGoogle= @"https://www.google.co.uk/search?q=%@&tbm=isch&gws_rd=ssl";
@@ -103,14 +105,27 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
 
 - (void)buildDataFromURL:(NSURL *_Nonnull)url completion:(void (^_Nonnull)(BOOL success))completionHandler error: (void (^_Nonnull)(NSError * _Nonnull error))errorHandler {
     if ([self clearData]) {
-        [GridManager downloadURL:url complition:^(BOOL success) {
-            if (success) {
-                [Grid createGrids:[self managedObjectContext]];
-            }
-            completionHandler(success);
-        } error:^(NSError * _Nullable error) {
-            errorHandler(error);
-        }];
+        BOOL urlContainsOBZExtension = [url.absoluteString containsString:@".obz"];
+        
+        if (urlContainsOBZExtension) {
+            [GridManager downloadOBZFromURL:url complition:^(BOOL success) {
+                if (success) {
+                    [Grid createGrids:[self managedObjectContext]];
+                }
+                completionHandler(success);
+            } error:^(NSError * _Nullable error) {
+                errorHandler(error);
+            }];
+        } else {
+            [GridManager downloadURL:url complition:^(BOOL success) {
+                if (success) {
+                    [Grid createGrids:[self managedObjectContext]];
+                }
+                completionHandler(success);
+            } error:^(NSError * _Nullable error) {
+                errorHandler(error);
+            }];
+        }
     }
 }
 
@@ -169,6 +184,13 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     return colorString;
 }
 
++ (NSArray *)colorStringToArray:(NSString *)colorString {
+    NSString *colorStr = [colorString stringByReplacingOccurrencesOfString:@"rgb(" withString:@""];
+    colorStr = [colorStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    return [colorStr componentsSeparatedByString:@","];
+}
+
 // Usage - UIColor *c = [GridManager colorFromString: string ];
 + (UIColor *)colorFromString:(NSString *)colorString {
     UIColor *colorFromString;
@@ -188,13 +210,28 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
             __weak Cell *weakCell = cell;
             __weak CellView *weakView = view;
             __block CGRect blockRect = rect;
+            
+            if (cell.image.uri) {
+                BOOL filePath = [[NSFileManager defaultManager] fileExistsAtPath:cell.image.uri];
+                if (filePath) {
+                    cell.image.data = [NSData dataWithContentsOfFile:cell.image.uri];
+                    NSError *error;
+                    [cell.managedObjectContext save:&error];
+                    
+                    if(!error){
+                        [GridManager setCellView:view withImage:cell.image.data inRect:blockRect];
+                    }
+                    return;
+                }
+            }
+            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
                 Cell *strongCell = weakCell;
                 CellView *stongView = weakView;
                 
                 NSURL *imageURL = [[GridManager  getDomain] URLByAppendingPathComponent:cell.image.uri];
                 
-                [GridManager get: imageURL completion:^(NSData * _Nullable data) {
+                [GridManager get:imageURL completion:^(NSData * _Nullable data) {
                     if (data) {
                         strongCell.image.data = data;
                         NSError *error;
@@ -209,7 +246,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
                 }];
             });
         } else {
-            [GridManager setCellView:view withImage: cell.image.data inRect: rect];
+            [GridManager setCellView:view withImage:cell.image.data inRect:rect];
         }
     }
 }
@@ -221,11 +258,13 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
             UIImageView *imageView = [[UIImageView alloc] initWithImage: image];
             
             imageView.frame =  rect;
-            
+            imageView.backgroundColor = [UIColor clearColor];
             imageView.contentMode = UIViewContentModeCenter;
+            
             if (imageView.bounds.size.width > (image.size.width && imageView.bounds.size.height > (image.size.height))) {
                 imageView.contentMode = UIViewContentModeScaleAspectFit;
             }
+            view.backgroundColor = [UIColor clearColor];
             [view addSubview: imageView];
         });
     }
@@ -251,7 +290,7 @@ NSString *const kSpeakTextNotification = @"kSpeakTextNotification";
     [properties synchronize]; //update & save
 }
 
-+ (NSURL *_Nullable)getJSONURL {
++ (NSURL *_Nullable)getRemoteURL {
     NSURL *url = [NSURL URLWithString: [[NSUserDefaults standardUserDefaults] objectForKey:kRemoteJsonUrlKey]];
     return url;
 }

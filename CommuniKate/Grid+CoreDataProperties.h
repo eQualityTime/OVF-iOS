@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Grid *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSDecimalNumber *gridID;
+@property (nullable, nonatomic, copy) NSString *gridID;
 @property (nullable, nonatomic, copy) NSString *name;
 @property (nullable, nonatomic, retain) NSSet<Cell *> *cells;
 @property (nullable, nonatomic, retain) Link *link;

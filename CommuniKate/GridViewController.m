@@ -99,10 +99,11 @@
     
     if (self.pendingRequest) { return; }
     
-    NSString *path = [[GridManager getJSONURL] absoluteString];
+    NSString *path = [[GridManager getRemoteURL] absoluteString];
     BOOL urlContainsJSONExtension = [path containsString:@".json"];
-    
-    if (urlContainsJSONExtension) {
+    BOOL urlContainsOBZExtension = [path containsString:@".obz"];
+
+    if (urlContainsJSONExtension || urlContainsOBZExtension) {
         [self loadDefaultGrid:nil];
     } else {
         NSURL *defaultRemoteUrl = [NSURL URLWithString:kRemoteURLString];
@@ -400,12 +401,15 @@
 }
 
 - (void)loadDefaultGrid:(NSNotification *)notification {
-    
     NSManagedObjectContext *context = self.gridManager.managedObjectContext;
     if (context) {
         NSUInteger count = [Grid gridsCount: context];
         if (count) {
             Grid *grid = [Grid getGridByName:kDefaultGrid inManagedObjectContext:context];
+            if (!grid) {
+                grid = [Grid getGridByName:kDefaultOBZGrid inManagedObjectContext:context];
+            }
+            
             if (grid) {
                 [self changeToGrid:grid];
             }
