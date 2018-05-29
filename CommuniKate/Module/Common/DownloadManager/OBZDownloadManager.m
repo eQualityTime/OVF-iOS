@@ -7,24 +7,19 @@
 //
 
 #import "OBZDownloadManager.h"
-#import <ZipArchive/ZipArchive.h>
-#import "OBZManifest.h"
-#import "Board.h"
 #import "GridManager.h"
 
 @implementation OBZDownloadManager
 
 - (NSDictionary *)convertOBZDataDictionary:(NSData *)data {
-    NSString *path = [NSString stringWithFormat:@"%@/\%@",
-                      NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0],
-                      @"downloaded.obz"];
+    NSString *path = [self getDownloadedOBZPath];
 
     BOOL fileCreated = [[NSFileManager defaultManager] createFileAtPath:path contents:data attributes:nil];
     BOOL fileExist = [[NSFileManager defaultManager] fileExistsAtPath:path];
     
     if (!fileCreated && !fileExist) { return nil; }
 
-    NSString *unzipPath = [self getOBZPath];
+    NSString *unzipPath = [self getOBZFilePath];
     if (!unzipPath) { return nil; }
     
     BOOL success = [SSZipArchive unzipFileAtPath:path
@@ -175,7 +170,7 @@
     return [NSJSONSerialization JSONObjectWithData:obfData options:kNilOptions error:nil];
 }
 
-- (NSString *)getOBZPath {
+- (NSString *)getOBZFilePath {
     NSString *path = [NSString stringWithFormat:@"%@/\%@",
                       NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0],
                       @"obzPath"];
@@ -189,6 +184,12 @@
         return nil;
     }
     return url.path;
+}
+
+- (NSString *)getDownloadedOBZPath {
+    return [NSString stringWithFormat:@"%@/\%@",
+            NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0],
+            @"downloaded.obz"];
 }
 
 @end

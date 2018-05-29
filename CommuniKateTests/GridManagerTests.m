@@ -32,7 +32,7 @@
     [super tearDown];
 }
 
--(void)testClearData{
+-(void)testClearData {
     runTestInMainLoop(^(BOOL *done) {
         NSURL *urlToClear = [GridManager jsonDirectory];
         BOOL success = [self.manager clearData];
@@ -43,10 +43,10 @@
     });
 }
 
--(void)testBuildData{
+-(void)testBuildData {
     runTestInMainLoop(^(BOOL *done) {
         NSURL *url = [NSURL URLWithString:testPath];
-        [self.manager buildDataFromURL: url completion:^(BOOL success) {
+        [self.manager buildDataFromURL:url completion:^(BOOL success) {
             XCTAssertTrue(success, @"Failed to rebuild application data");
             *done = YES;
         } error:^(NSError * _Nonnull error) {
@@ -55,9 +55,18 @@
         }];
     });
 }
- 
 
-
-
+-(void)testBuildObzData {
+    runTestInMainLoop(^(BOOL *done) {
+        NSURL *url = [NSURL URLWithString:testObzPath];
+        [self.manager buildDataFromURL:url completion:^(BOOL success) {
+            XCTAssertTrue(success, @"Failed to rebuild application data");
+            *done = YES;
+        } error:^(NSError * _Nonnull error) {
+            XCTAssertNotNil(error, @"An unrecoverable error occured, see detail below for an indication\n%@", [error description]);
+            *done = YES;
+        }];
+    });
+}
 
 @end
