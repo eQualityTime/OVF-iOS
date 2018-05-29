@@ -12,6 +12,7 @@
 
 
 NSString *const testPath = @"https://equalitytime.github.io/CommuniKate/demos/CK20V2.pptx/pageset.json";
+NSString *const testObzPath = @"http://designs.theopenvoicefactory.org/clare/data/pageset.obz";
 
 @interface CommuniKateTests : XCTestCase
 

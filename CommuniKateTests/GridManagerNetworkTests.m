@@ -10,6 +10,7 @@
 #import "CommuniKateTests.h"
 #import "GridManager+Network.h"
 #import "GridManager+Store.h"
+#import "OBZDownloadManager.h"
 
 @interface GridManagerNetworkTests : XCTestCase
 @end
@@ -60,6 +61,24 @@
             }
         } error:^(NSError * _Nonnull error) {
             // NSLog(@"error message: \nError caused by: \n%@ User info: \n%@",  [error description], [error userInfo]);
+            XCTAssertNil(error, @"");
+            *done = YES;
+        }];
+    });
+}
+
+- (void)testGetObz {
+    runTestInMainLoop(^(BOOL *done) {
+        NSURL *url = [NSURL URLWithString:testObzPath];
+        
+        [GridManager getOBZ:url completion:^(NSData *data) {
+            XCTAssertNotNil(data, @"Obz download failed");
+            if (data) {
+                NSDictionary *grids = [[OBZDownloadManager new] convertOBZDataDictionary:data];
+                XCTAssertNotNil(grids, @"Obz file is successfully converted into grids");
+                *done = YES;
+            }
+        } error:^(NSError *error) {
             XCTAssertNil(error, @"");
             *done = YES;
         }];

@@ -19,5 +19,6 @@ static inline void runTestInMainLoop(void(^ _Nullable block)(BOOL * _Nullable do
 }
 
 extern NSString *const _Nonnull testPath;
+extern NSString *const _Nonnull testObzPath;
 
 #endif /* CommuniKateTests_h */
